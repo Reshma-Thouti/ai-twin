@@ -1,0 +1,484 @@
+<!-- C:\recruiter-ai-twin\index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T.E.S.A - Developer AI Twin & Portfolio</title>
+  <meta name="description" content="Explore Reshma Thouti's B.Tech CSE portfolio through her interactive Stark Tech AI Twin, designed to answer recruiter queries and demonstrate her skills.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Tech Grid Overlay Background -->
+  <div class="hud-grid-overlay"></div>
+  <div class="hud-scanlines"></div>
+
+  <!-- Audio Element for Sound FX -->
+  <audio id="audio-click" src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" preload="auto"></audio>
+
+  <!-- Jarvis Top HUD bar -->
+  <header class="hud-topbar" id="hud-topbar">
+    <div class="hud-topbar-left">
+      <div class="hud-brand-logo">
+        <svg class="brand-svg" viewBox="0 0 50 50">
+          <polygon points="25,5 45,15 45,35 25,45 5,35 5,15" fill="none" stroke="#ff002a" stroke-width="2"/>
+          <polygon points="25,12 37,19 37,31 25,38 13,31 13,19" fill="none" stroke="#ff002a" stroke-width="1" stroke-dasharray="2,2"/>
+          <circle cx="25" cy="25" r="5" fill="#ff002a"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-title" id="brand-title">T.E.S.A</span>
+          <span class="brand-subtitle">AI PORTFOLIO TWIN</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hud-topbar-center">
+      <p class="hud-motto">"WITH GREAT CODE COMES GREAT SCALABILITY. I HANDLE THE QUERIES, YOU BUILD THE FUTURE. 🕸️"</p>
+    </div>
+    
+    <div class="hud-topbar-right">
+      <div class="system-status-indicator">
+        <span class="status-pulse"></span>
+        <span class="status-text">SYSTEM ONLINE</span>
+      </div>
+      <div class="user-profile-widget" id="user-profile-widget">
+        <div class="user-profile-avatar">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=64&auto=format&fit=crop" alt="Reshma Thouti" id="top-avatar">
+        </div>
+        <div class="user-profile-info">
+          <span class="user-profile-name" id="user-profile-name">RESHMA THOUTI</span>
+          <span class="user-profile-alias">AKA DEVELOPER</span>
+        </div>
+        <svg class="chevron-down-svg" viewBox="0 0 24 24" width="16" height="16">
+          <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main HUD Layout Grid -->
+  <main class="hud-layout-container">
+    
+    <!-- Left Sidebar -->
+    <aside class="hud-column sidebar-left" id="sidebar-left">
+      <nav class="hud-nav-menu" id="hud-nav-menu">
+        <button class="nav-item active" data-tab="chat" id="btn-chat">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" fill="currentColor"/></svg>
+          <span class="nav-label">CHAT WITH T.E.S.A</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="about" id="btn-about">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/></svg>
+          <span class="nav-label">ABOUT ME</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="projects" id="btn-projects">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H6v-2h8v2zm4-4H6v-2h12v2z" fill="currentColor"/></svg>
+          <span class="nav-label">PROJECTS</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="skills" id="btn-skills">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z" fill="currentColor"/></svg>
+          <span class="nav-label">SKILLS</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="experience" id="btn-experience">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/></svg>
+          <span class="nav-label">EXPERIENCE</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="achievements" id="btn-achievements">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v3c0 5.5 4.5 10 10 10h.5c.75 0 1.5-.08 2.25-.22C16.96 17.07 19 14.28 19 11V7c0-1.1-.9-2-2-2zm-2 6c0 3.31-2.69 6-6 6H7c0-3.31 2.69-6 6-6h4v6zm2.24-5.26c-.16-.36-.45-.63-.82-.74v5.45c1.4-.73 2.37-2.18 2.45-3.87v-.84h-1.63z" fill="currentColor"/></svg>
+          <span class="nav-label">ACHIEVEMENTS</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="stats" id="btn-stats">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="currentColor"/></svg>
+          <span class="nav-label">DEVELOPER STATS</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="github" id="btn-github">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" fill="currentColor"/></svg>
+          <span class="nav-label">GITHUB ACTIVITY</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="learning" id="btn-learning">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.49 12L12 15.55 18.51 12 12 8.45 5.49 12zM12 18c-3.1 0-5.89-1.63-7.5-4.1l-1.65 1.2C4.99 18.25 8.24 20 12 20s7.01-1.75 9.15-4.9l-1.65-1.2C17.89 16.37 15.1 18 12 18z" fill="currentColor"/></svg>
+          <span class="nav-label">LEARNING JOURNEY</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+        <button class="nav-item" data-tab="files" id="btn-files">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="currentColor"/></svg>
+          <span class="nav-label">FILES & DOCS</span>
+          <svg class="nav-chevron" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
+        </button>
+      </nav>
+
+      <!-- Developer Message Box -->
+      <div class="hud-dev-message-card">
+        <div class="card-corner-top-left"></div>
+        <div class="card-corner-bottom-right"></div>
+        <div class="hud-card-header">
+          <svg class="spider-small-svg" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="2" fill="#ff002a"/>
+            <path d="M12 10c-1 0-4 1-4 3v1c0 1 1 2 4 2s4-1 4-3v-1c0-2-3-2-4-2z" fill="#ff002a"/>
+            <path d="M8 13c-2-1-3-3-3-5M16 13c2-1 3-3 3-5M7 14c-2 0-4 1-5 3M17 14c2 0 4 1 5 3M7 15c-1 1-2 3-2 5M17 15c1 1 2 3 2 5" stroke="#ff002a" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="card-title">FROM RESHMA</span>
+        </div>
+        <p class="hud-dev-note" id="hud-dev-note">
+          Loading developer note...
+        </p>
+        <div class="hud-dev-signature">— Your Friendly Developer</div>
+      </div>
+    </aside>
+
+    <!-- Center Panel (Content Container) -->
+    <section class="hud-column center-panel">
+      
+      <!-- Jarvis Frame Corners -->
+      <div class="panel-border-glow"></div>
+      <div class="hud-corner tl"></div>
+      <div class="hud-corner tr"></div>
+      <div class="hud-corner bl"></div>
+      <div class="hud-corner br"></div>
+
+      <!-- Content Views (Toggled via JS) -->
+      
+      <!-- 1. CHAT VIEW -->
+      <div class="hud-view-content active" id="view-chat">
+        <div class="chat-header">
+          <div class="chat-hud-avatar-container">
+            <div class="rotating-hologram-circle"></div>
+            <div class="chat-hud-avatar">
+              <!-- Hologram face mesh SVG -->
+              <svg viewBox="0 0 100 100" class="hologram-face-svg">
+                <circle cx="50" cy="48" r="30" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="3,3"/>
+                <path d="M30 45 Q50 30 70 45" fill="none" stroke="#00f0ff" stroke-width="1.5"/>
+                <path d="M30 50 Q50 65 70 50" fill="none" stroke="#ff002a" stroke-width="1.5"/>
+                <!-- Eye slots -->
+                <polygon points="38,42 46,40 44,45 37,45" fill="none" stroke="#ff002a" stroke-width="1.5"/>
+                <polygon points="62,42 54,40 56,45 63,45" fill="none" stroke="#ff002a" stroke-width="1.5"/>
+                <!-- Wireframe grid lines -->
+                <line x1="50" y1="18" x2="50" y2="78" stroke="rgba(0, 240, 255, 0.3)" stroke-width="1"/>
+                <line x1="20" y1="48" x2="80" y2="48" stroke="rgba(0, 240, 255, 0.3)" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="chat-hud-title-info">
+            <h1 class="chat-twin-title" id="chat-twin-title">T.E.S.A</h1>
+            <p class="chat-twin-status">AT YOUR SERVICE, CREATIVE RECRUITER.</p>
+          </div>
+        </div>
+
+        <!-- Chat History -->
+        <div class="chat-history" id="chat-history">
+          <!-- Initial AI message -->
+          <div class="chat-message ai">
+            <div class="msg-avatar-container">
+              <svg viewBox="0 0 100 100" class="mini-hud-avatar-svg"><circle cx="50" cy="50" r="40" fill="none" stroke="#ff002a" stroke-width="2"/><circle cx="50" cy="50" r="25" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="2,2"/><circle cx="50" cy="50" r="5" fill="#ff002a"/></svg>
+            </div>
+            <div class="msg-content-wrapper">
+              <div class="msg-meta"><span class="msg-author">T.E.S.A</span> <span class="msg-time">SYSTEM INITIALIZED</span></div>
+              <div class="msg-bubble" id="welcome-bubble">
+                Yo! I'm T.E.S.A, Reshma's AI Twin. Ask me anything about her skills, projects, certifications, or even roast her 😉
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suggested Prompt Chips -->
+        <div class="suggested-chips-container" id="suggested-chips">
+          <!-- Populated by JS from portfolioData.recentQueries -->
+        </div>
+
+        <!-- Chat Input Bar -->
+        <div class="chat-input-bar">
+          <div class="input-corner-left"></div>
+          <div class="input-corner-right"></div>
+          <input type="text" id="chat-input-field" placeholder="Ask me anything about Reshma's qualifications..." autocomplete="off">
+          
+          <button class="chat-action-btn mic-btn" id="btn-voice-input" title="Voice Recognition">
+            <svg viewBox="0 0 24 24" class="control-icon"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z" fill="currentColor"/></svg>
+            <span class="speech-pulse"></span>
+          </button>
+          
+          <button class="chat-action-btn send-btn" id="btn-send-message" title="Send Query">
+            <svg viewBox="0 0 24 24" class="control-icon"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/></svg>
+          </button>
+        </div>
+        
+        <div class="chat-disclaimer">T.E.S.A AI Twin can make mistakes. But hey, even Stark Systems glitch sometimes. 😉</div>
+      </div>
+
+      <!-- 2. ABOUT VIEW -->
+      <div class="hud-view-content" id="view-about">
+        <h2 class="view-title">ABOUT ME</h2>
+        <div class="hud-scrollable-content">
+          <div class="profile-card-large">
+            <p class="about-main-text" id="about-text-content">Loading bio...</p>
+            
+            <div class="hud-sub-section">
+              <h3 class="sub-section-title">EDUCATION</h3>
+              <div class="education-block">
+                <div class="edu-header">
+                  <span class="edu-degree" id="edu-degree">Degree</span>
+                  <span class="edu-duration" id="edu-duration">Duration</span>
+                </div>
+                <div class="edu-sub" id="edu-institution">Institution</div>
+                <div class="edu-grade">CGPA: <span id="edu-cgpa" class="glow-red">9.2/10</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PROJECTS VIEW -->
+      <div class="hud-view-content" id="view-projects">
+        <h2 class="view-title">PROJECTS</h2>
+        <div class="hud-scrollable-content" id="projects-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- 4. SKILLS VIEW -->
+      <div class="hud-view-content" id="view-skills">
+        <h2 class="view-title">SKILLS MATRIX</h2>
+        <div class="hud-scrollable-content" id="skills-matrix">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- 5. EXPERIENCE VIEW -->
+      <div class="hud-view-content" id="view-experience">
+        <h2 class="view-title">EXPERIENCE LOG</h2>
+        <div class="hud-scrollable-content" id="experience-timeline">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- 6. ACHIEVEMENTS VIEW -->
+      <div class="hud-view-content" id="view-achievements">
+        <h2 class="view-title">HONORS & ACHIEVEMENTS</h2>
+        <div class="hud-scrollable-content" id="achievements-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- 7. STATS VIEW -->
+      <div class="hud-view-content" id="view-stats">
+        <h2 class="view-title">WEB-SLINGER STATS</h2>
+        <div class="hud-scrollable-content">
+          <div class="stats-hud-grid" id="stats-hud-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. GITHUB VIEW -->
+      <div class="hud-view-content" id="view-github">
+        <h2 class="view-title">GITHUB CONTRIB ENGINE</h2>
+        <div class="hud-scrollable-content">
+          <div class="github-simulation-card">
+            <h3 class="github-card-title">@Reshma-Thouti on GitHub</h3>
+            <p class="github-subtitle">Simulating real-time contribution matrix...</p>
+            <div class="github-grid" id="github-grid">
+              <!-- Grid boxes populated dynamically -->
+            </div>
+            <div class="github-legend">
+              <span>Less</span>
+              <div class="legend-box level-0"></div>
+              <div class="legend-box level-1"></div>
+              <div class="legend-box level-2"></div>
+              <div class="legend-box level-3"></div>
+              <div class="legend-box level-4"></div>
+              <span>More</span>
+            </div>
+            <div class="github-live-timeline" id="github-live-timeline" style="margin-top: 20px; border-top: 1px solid rgba(255, 0, 42, 0.15); padding-top: 15px;">
+              <h4 style="font-family: var(--hud-font); font-size: 11px; color: var(--accent-cyan); margin-bottom: 10px; letter-spacing: 1px;">LIVE ACTIVITY STREAM</h4>
+              <div id="github-activity-stream" style="font-family: var(--mono-font); font-size: 11px; color: var(--text-gray); line-height: 1.6;">
+                Loading live GitHub event feed...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. LEARNING VIEW -->
+      <div class="hud-view-content" id="view-learning">
+        <h2 class="view-title">LEARNING JOURNEY</h2>
+        <div class="hud-scrollable-content" id="learning-journey-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- 10. FILES VIEW -->
+      <div class="hud-view-content" id="view-files">
+        <h2 class="view-title">FILES & DOCUMENTATION</h2>
+        <div class="hud-scrollable-content">
+          <div class="files-hud-table">
+            <div class="files-header">
+              <div>FILENAME</div>
+              <div>SIZE</div>
+              <div>TYPE</div>
+              <div>ACTION</div>
+            </div>
+            <div class="files-list" id="files-list">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right Sidebar -->
+    <aside class="hud-column sidebar-right" id="sidebar-right">
+      
+      <!-- "At a Glance" Profile widget -->
+      <div class="hud-panel-card glance-card">
+        <div class="glance-glow"></div>
+        <span class="hud-panel-title">DEVELOPER AT A GLANCE</span>
+        
+        <div class="glance-avatar-section">
+          <div class="glance-avatar-ring">
+            <div class="glance-avatar-svg-container">
+              <svg viewBox="0 0 100 100" class="hud-avatar-circle">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#ff002a" stroke-width="2"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#ff002a" stroke-dasharray="4,4" stroke-width="1"/>
+              </svg>
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=256&auto=format&fit=crop" alt="Reshma Thouti" class="glance-image" id="glance-avatar">
+            </div>
+          </div>
+          <div class="glance-bio-info">
+            <h3 class="glance-name" id="glance-name">RESHMA THOUTI</h3>
+            <p class="glance-subtitles" id="glance-subtitles">Loading roles...</p>
+          </div>
+        </div>
+
+        <div class="glance-quick-stats">
+          <div class="glance-stat-box">
+            <span class="stat-num" id="stat-projects">08+</span>
+            <span class="stat-label">PROJECTS</span>
+          </div>
+          <div class="glance-stat-box">
+            <span class="stat-num" id="stat-stacks">12+</span>
+            <span class="stat-label">TECH STACKS</span>
+          </div>
+          <div class="glance-stat-box">
+            <span class="stat-num" id="stat-commits">1.2K+</span>
+            <span class="stat-label">CONTRIBS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- "What I Can Do" Capabilities widget -->
+      <div class="hud-panel-card capabilities-card">
+        <span class="hud-panel-title">SYMBIOTE CAPABILITIES</span>
+        <ul class="capability-list" id="capability-list">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+
+      <!-- "Recent Conversations" widget -->
+      <div class="hud-panel-card conversations-card">
+        <span class="hud-panel-title">RECENT CONVERSATIONS</span>
+        <div class="recent-conversations-list" id="recent-queries-list">
+          <!-- Populated dynamically from portfolioData.recentQueries -->
+        </div>
+      </div>
+
+      <!-- "System Status" widget with mesh avatar -->
+      <div class="hud-panel-card status-card">
+        <span class="hud-panel-title">SYSTEM STATUS</span>
+        <div class="status-grid">
+          <div class="status-avatar-container">
+            <div class="status-avatar-wireframe">
+              <!-- Wireframe face/mask mesh SVG -->
+              <svg viewBox="0 0 100 100" class="mesh-mask-svg">
+                <!-- Outer glow rings -->
+                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255, 0, 42, 0.2)" stroke-width="1"/>
+                <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(0, 240, 255, 0.2)" stroke-dasharray="5,3" stroke-width="1"/>
+                
+                <!-- Ironman/Spider-man style Tech Mesh -->
+                <polygon points="50,15 70,25 78,45 68,75 50,88 32,75 22,45 30,25" fill="none" stroke="#ff002a" stroke-width="1.5"/>
+                <polygon points="50,25 64,32 70,45 62,68 50,78 38,68 30,45 36,32" fill="none" stroke="rgba(0, 240, 255, 0.6)" stroke-width="1"/>
+                <polygon points="50,35 58,40 60,45 56,58 50,65 44,58 40,45 42,40" fill="none" stroke="#ff002a" stroke-width="0.8"/>
+                
+                <!-- Radial axis lines -->
+                <line x1="50" y1="15" x2="50" y2="88" stroke="rgba(255, 0, 42, 0.3)" stroke-width="1"/>
+                <line x1="22" y1="45" x2="78" y2="45" stroke="rgba(255, 0, 42, 0.3)" stroke-width="1"/>
+                <line x1="30" y1="25" x2="68" y2="75" stroke="rgba(0, 240, 255, 0.3)" stroke-width="0.8"/>
+                <line x1="70" y1="25" x2="32" y2="75" stroke="rgba(0, 240, 255, 0.3)" stroke-width="0.8"/>
+                
+                <!-- Eye triangles -->
+                <polygon points="36,44 46,42 42,48" fill="#ff002a" opacity="0.8"/>
+                <polygon points="64,44 54,42 58,48" fill="#ff002a" opacity="0.8"/>
+              </svg>
+            </div>
+          </div>
+          <div class="status-metrics">
+            <div class="status-item">
+              <span class="status-label">ALL SYSTEMS</span>
+              <span class="status-value text-green" id="sys-systems">OPERATIONAL</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">AI MODEL</span>
+              <span class="status-value text-red" id="sys-model">GEMINI 2.0 FLASH</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">MEMORY CORE</span>
+              <span class="status-value text-blue" id="sys-memory">ACTIVE</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">WEB-SHOOTERS</span>
+              <span class="status-value text-red" id="sys-shooters">READY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Gemini Key Config Modal Overlay (Hidden by Default) -->
+  <div class="modal-overlay" id="api-modal">
+    <div class="modal-card">
+      <div class="card-corner-top-left"></div>
+      <div class="card-corner-bottom-right"></div>
+      <h3 class="modal-title">GEMINI COGNITIVE INTERFACE CONFIG</h3>
+      <p class="modal-desc">
+        T.E.S.A uses Gemini to chat intelligently and evaluate role capability. Paste your Gemini API Key below to activate full intellectual twin mode.
+      </p>
+      
+      <div class="api-key-input-container">
+        <input type="password" id="api-key-input" placeholder="AIzaSy..." autocomplete="off">
+        <button class="api-save-btn" id="btn-save-api">INITIALIZE CORE</button>
+      </div>
+      
+      <div class="api-info-text">
+        <span>No API Key? No problem. The twin will run on its local simulated parser logic.</span>
+        <button class="api-close-btn" id="btn-close-modal">RUN MOCK DEMO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Settings Toggle Button floating at bottom right -->
+  <button class="api-settings-floating-btn" id="btn-open-settings" title="Configure AI Key">
+    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" fill="currentColor"/></svg>
+  </button>
+
+  <!-- JavaScript Modules -->
+  <script src="data.js?v=2.0"></script>
+  <script src="app.js?v=2.0"></script>
+</body>
+</html>
