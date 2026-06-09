@@ -232,7 +232,7 @@ const portfolioData = {
     "Roast Reshma's coding style 🕸️"
   ],
   systemStatus: {
-    model: "GEMINI 2.0 FLASH (VIA CLIENT SDK)",
+    model: "GEMINI 1.5 FLASH (VIA CLIENT SDK)",
     memoryCore: "ACTIVE",
     webShooters: "READY",
     systemsOperational: true

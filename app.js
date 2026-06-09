@@ -581,8 +581,8 @@ ${JSON.stringify(data, null, 2)}
     }
 
     // 2. Fallback to client-side API Key (from gear settings modal)
-    if (apiKey && apiKey.trim().startsWith("AIzaSy")) {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    if (apiKey && (apiKey.trim().startsWith("AIzaSy") || apiKey.trim().startsWith("AQ."))) {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       const requestBody = {
         contents: [
           {
