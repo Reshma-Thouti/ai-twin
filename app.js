@@ -573,7 +573,7 @@ ${JSON.stringify(data, null, 2)}
         console.warn(`Vercel Proxy returned error: ${errMsg}`);
         // If we are deployed on Vercel and the key is missing from environment variables, notify the user.
         if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-          return `<strong>T.E.S.A Sync Warning:</strong> Failed to connect to cognitive center via Vercel backend.<br><br>Reason: ${errMsg}<br><br>Please check your Vercel Environment Variables.`;
+          return `<strong>T.E.S.A Cognitive Core Busy</strong><br><br>Gemini is currently experiencing high demand.<br><br>Please try again in a few seconds.`;
         }
       }
     } catch (err) {

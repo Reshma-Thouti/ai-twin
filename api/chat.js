@@ -52,13 +52,32 @@ module.exports = async function handler(req, res) {
   };
 
   try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(requestBody)
-    });
+        let response;
+
+        for (let attempt = 1; attempt <= 3; attempt++) {
+
+          response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+          });
+
+          // Success
+          if (response.ok) {
+            break;
+          }
+
+          // Retry only for Gemini overload
+          if (response.status === 503 && attempt < 3) {
+            console.log(`[T.E.S.A Retry] Gemini busy. Retrying attempt ${attempt}/3`);
+            await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
+            continue;
+          }
+
+          break;
+        }
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -78,6 +97,12 @@ module.exports = async function handler(req, res) {
           console.error(`[T.E.S.A Diagnostic] Error listing models:`, listErr);
         }
       }
+
+      if (response.status === 503) {
+        throw new Error(
+          "T.E.S.A Cognitive Core is temporarily busy. Please try again in a few seconds."
+        );
+        }
 
       throw new Error(`Gemini API returned status ${response.status}: ${errorText}`);
     }
