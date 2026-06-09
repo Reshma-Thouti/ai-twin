@@ -1,4 +1,4 @@
-// C:\recruiter-ai-twin\api\chat.js
+// C:\ai-twin\api\chat.js
 
 module.exports = async function handler(req, res) {
   // Handle CORS options request
@@ -34,7 +34,7 @@ module.exports = async function handler(req, res) {
   // Print diagnostic log in Vercel console to help verify which key is being used
   console.log(`[T.E.S.A Proxy] Request received. Active API Key Prefix: "${apiKey.substring(0, 6)}..." (Length: ${apiKey.length})`);
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   const requestBody = {
     contents: [
@@ -62,6 +62,23 @@ module.exports = async function handler(req, res) {
 
     if (!response.ok) {
       const errorText = await response.text();
+      
+      // If it is a 404 error, list all models that this key has access to in the console logs
+      if (response.status === 404) {
+        try {
+          const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+          if (listResponse.ok) {
+            const listData = await listResponse.json();
+            const modelNames = listData.models ? listData.models.map(m => m.name) : [];
+            console.log(`[T.E.S.A Diagnostic] 404 Error: Available model list for this key:`, modelNames);
+          } else {
+            console.log(`[T.E.S.A Diagnostic] Failed to list models: Status ${listResponse.status}`);
+          }
+        } catch (listErr) {
+          console.error(`[T.E.S.A Diagnostic] Error listing models:`, listErr);
+        }
+      }
+
       throw new Error(`Gemini API returned status ${response.status}: ${errorText}`);
     }
 
