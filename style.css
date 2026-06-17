@@ -1,6 +1,4 @@
-/* C:\recruiter-ai-twin\style.css */
 
-/* Core Variables & Constants */
 :root {
   --bg-dark-core: #04060c;
   --bg-dark-panel: rgba(8, 14, 24, 0.85);
@@ -37,7 +35,6 @@
   --transition-speed: 0.25s;
 }
 
-/* Global Reset & Base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -58,7 +55,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Scrollbar customization */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -77,7 +74,6 @@ body {
   box-shadow: 0 0 4px var(--accent-cyan);
 }
 
-/* Background Grids & Technical Overlays */
 .hud-grid-overlay {
   position: fixed;
   top: 0;
@@ -124,7 +120,7 @@ body {
   opacity: 0.45;
 }
 
-/* Top Navigation Bar */
+
 .hud-topbar {
   display: flex;
   justify-content: space-between;
@@ -282,7 +278,6 @@ body {
   color: var(--text-gray);
 }
 
-/* Layout Columns */
 .hud-layout-container {
   display: grid;
   grid-template-columns: 280px 1fr 320px;
@@ -300,7 +295,6 @@ body {
   overflow: hidden;
 }
 
-/* Left Sidebar Layout */
 .sidebar-left {
   display: flex;
   flex-direction: column;
@@ -395,7 +389,6 @@ body {
   color: var(--accent-red);
 }
 
-/* Developer Message Card Left Sidebar */
 .hud-dev-message-card {
   background: rgba(255, 0, 42, 0.03);
   border: 1px solid var(--border-red);
@@ -467,7 +460,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Center Panel (Core Workspace) */
 .center-panel {
   position: relative;
   background: var(--bg-dark-panel);
@@ -489,7 +481,6 @@ body {
   box-shadow: 0 0 15px rgba(255, 0, 42, 0.05);
 }
 
-/* Corner HUD accents */
 .hud-corner {
   position: absolute;
   width: 16px;
@@ -502,7 +493,7 @@ body {
 .hud-corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
 .hud-corner.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
 
-/* Dynamic Swappable Views */
+
 .hud-view-content {
   display: none;
   flex-direction: column;
@@ -544,7 +535,6 @@ body {
   padding-right: 8px;
 }
 
-/* Chat view Styles */
 .chat-header {
   display: flex;
   align-items: center;
@@ -614,7 +604,6 @@ body {
   margin-top: 4px;
 }
 
-/* Chat History & Bubbles */
 .chat-history {
   flex-grow: 1;
   overflow-y: auto;
@@ -708,7 +697,6 @@ body {
   clip-path: polygon(4% 0, 100% 0, 100% 80%, 96% 100%, 0 100%, 0 12px);
 }
 
-/* Chat bubble interior features */
 .chat-response-title {
   font-family: var(--hud-font);
   font-size: 11px;
@@ -766,7 +754,6 @@ body {
   color: var(--text-white);
 }
 
-/* suggested Prompts Chips */
 .suggested-chips-container {
   display: flex;
   gap: 8px;
@@ -798,7 +785,6 @@ body {
   box-shadow: 0 0 8px rgba(255, 0, 42, 0.2);
 }
 
-/* Chat Input bar */
 .chat-input-bar {
   display: flex;
   align-items: center;
@@ -903,7 +889,6 @@ body {
   text-align: center;
 }
 
-/* Typings indicator */
 .typing-indicator {
   display: flex;
   gap: 4px;
@@ -922,7 +907,6 @@ body {
 .typing-dot:nth-child(1) { animation-delay: -0.32s; }
 .typing-dot:nth-child(2) { animation-delay: -0.16s; }
 
-/* ABOUT ME view Styles */
 .profile-card-large {
   background: rgba(10, 16, 26, 0.4);
   border: 1px solid rgba(255, 0, 42, 0.15);
@@ -987,7 +971,6 @@ body {
   font-size: 12px;
 }
 
-/* PROJECTS view Styles */
 .project-card {
   background: rgba(10, 18, 30, 0.5);
   border: 1px solid rgba(255, 0, 42, 0.15);
@@ -1095,7 +1078,7 @@ body {
   padding: 6px;
 }
 
-/* SKILLS Matrix Styles */
+
 .skills-grid-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1157,7 +1140,7 @@ body {
   transition: width 1s cubic-bezier(0.1, 0.8, 0.2, 1);
 }
 
-/* EXPERIENCE view Styles */
+
 .experience-log-item {
   border-left: 2px solid var(--accent-red);
   padding-left: 20px;
@@ -1225,7 +1208,6 @@ body {
   color: var(--accent-red);
 }
 
-/* ACHIEVEMENTS view Styles */
 .achievement-row {
   display: flex;
   align-items: flex-start;
@@ -1262,7 +1244,6 @@ body {
   color: var(--text-gray);
 }
 
-/* DEVELOPER STATS view */
 .stats-hud-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1294,7 +1275,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* GITHUB Simulation view */
 .github-simulation-card {
   background: rgba(10, 16, 26, 0.4);
   border: 1px solid rgba(255, 0, 42, 0.15);
@@ -1334,7 +1314,6 @@ body {
   box-shadow: 0 0 4px var(--accent-cyan);
 }
 
-/* Contrib levels colored red instead of green for theme match! */
 .github-box.level-0 { background-color: rgba(255, 255, 255, 0.05); }
 .github-box.level-1 { background-color: rgba(255, 0, 42, 0.15); }
 .github-box.level-2 { background-color: rgba(255, 0, 42, 0.35); }
@@ -1363,7 +1342,6 @@ body {
 .legend-box.level-3 { background-color: rgba(255, 0, 42, 0.65); }
 .legend-box.level-4 { background-color: rgba(255, 0, 42, 0.95); }
 
-/* LEARNING view */
 .learning-log-card {
   background: rgba(10, 16, 26, 0.4);
   border: 1px solid rgba(0, 240, 255, 0.15);
@@ -1409,7 +1387,7 @@ body {
   color: var(--text-gray);
 }
 
-/* FILES view */
+
 .files-hud-table {
   border: 1px solid rgba(255, 0, 42, 0.15);
   border-radius: 4px;
@@ -1468,7 +1446,7 @@ body {
   box-shadow: 0 0 6px var(--accent-cyan-glow);
 }
 
-/* Right Sidebar Layout */
+
 .sidebar-right {
   display: flex;
   flex-direction: column;
@@ -1598,7 +1576,7 @@ body {
   color: var(--text-gray-dark);
 }
 
-/* Caffeine gauge meter styles */
+
 .caffeine-meter-container {
   display: flex;
   flex-direction: column;
@@ -1636,7 +1614,6 @@ body {
   transition: stroke-dasharray 1s ease-out;
 }
 
-/* Capability list widget */
 .capability-list {
   list-style-type: none;
 }
@@ -1661,7 +1638,7 @@ body {
   box-shadow: 0 0 3px var(--accent-red);
 }
 
-/* Recent Conversations list */
+
 .recent-conversations-list {
   display: flex;
   flex-direction: column;
@@ -1699,7 +1676,7 @@ body {
   color: var(--text-gray-dark);
 }
 
-/* System Status card */
+
 .status-grid {
   display: flex;
   gap: 16px;
@@ -1757,7 +1734,7 @@ body {
 .text-red { color: var(--accent-red); text-shadow: 0 0 4px var(--accent-red-glow); }
 .text-blue { color: var(--accent-cyan); text-shadow: 0 0 4px var(--accent-cyan-glow); }
 
-/* Modal overlays for API config */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1872,7 +1849,7 @@ body {
   color: var(--text-white);
 }
 
-/* Floating settings button */
+
 .api-settings-floating-btn {
   position: fixed;
   bottom: 20px;
@@ -1899,7 +1876,7 @@ body {
   transform: rotate(45deg);
 }
 
-/* Animations */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1935,13 +1912,13 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Responsive Scaling Queries */
+
 @media (max-width: 1200px) {
   .hud-layout-container {
     grid-template-columns: 240px 1fr;
   }
   .sidebar-right {
-    display: none; /* Hide right sidebar on tablet */
+    display: none; 
   }
   .hud-motto {
     font-size: 10px;
@@ -1991,6 +1968,6 @@ body {
     grid-template-columns: 1fr;
   }
   .hud-topbar-center {
-    display: none; /* Hide motto on mobile */
+    display: none;
   }
 }
