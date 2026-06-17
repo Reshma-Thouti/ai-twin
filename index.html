@@ -1,4 +1,4 @@
-<!-- C:\recruiter-ai-twin\index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +7,24 @@
   <title>T.E.S.A - Developer AI Twin & Portfolio</title>
   <meta name="description" content="Explore Reshma Thouti's B.Tech CSE portfolio through her interactive Stark Tech AI Twin, designed to answer recruiter queries and demonstrate her skills.">
   
-  <!-- Google Fonts -->
+ 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   
-  <!-- CSS Stylesheet -->
+ 
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Tech Grid Overlay Background -->
+ 
   <div class="hud-grid-overlay"></div>
   <div class="hud-scanlines"></div>
 
-  <!-- Audio Element for Sound FX -->
+  
   <audio id="audio-click" src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" preload="auto"></audio>
 
-  <!-- Jarvis Top HUD bar -->
+  
   <header class="hud-topbar" id="hud-topbar">
     <div class="hud-topbar-left">
       <div class="hud-brand-logo">
@@ -64,10 +64,10 @@
     </div>
   </header>
 
-  <!-- Main HUD Layout Grid -->
+ 
   <main class="hud-layout-container">
     
-    <!-- Left Sidebar -->
+   
     <aside class="hud-column sidebar-left" id="sidebar-left">
       <nav class="hud-nav-menu" id="hud-nav-menu">
         <button class="nav-item active" data-tab="chat" id="btn-chat">
@@ -122,7 +122,7 @@
         </button>
       </nav>
 
-      <!-- Developer Message Box -->
+     
       <div class="hud-dev-message-card">
         <div class="card-corner-top-left"></div>
         <div class="card-corner-bottom-right"></div>
@@ -141,33 +141,31 @@
       </div>
     </aside>
 
-    <!-- Center Panel (Content Container) -->
+   
     <section class="hud-column center-panel">
       
-      <!-- Jarvis Frame Corners -->
+     
       <div class="panel-border-glow"></div>
       <div class="hud-corner tl"></div>
       <div class="hud-corner tr"></div>
       <div class="hud-corner bl"></div>
       <div class="hud-corner br"></div>
 
-      <!-- Content Views (Toggled via JS) -->
       
-      <!-- 1. CHAT VIEW -->
       <div class="hud-view-content active" id="view-chat">
         <div class="chat-header">
           <div class="chat-hud-avatar-container">
             <div class="rotating-hologram-circle"></div>
             <div class="chat-hud-avatar">
-              <!-- Hologram face mesh SVG -->
+             
               <svg viewBox="0 0 100 100" class="hologram-face-svg">
                 <circle cx="50" cy="48" r="30" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="3,3"/>
                 <path d="M30 45 Q50 30 70 45" fill="none" stroke="#00f0ff" stroke-width="1.5"/>
                 <path d="M30 50 Q50 65 70 50" fill="none" stroke="#ff002a" stroke-width="1.5"/>
-                <!-- Eye slots -->
+                
                 <polygon points="38,42 46,40 44,45 37,45" fill="none" stroke="#ff002a" stroke-width="1.5"/>
                 <polygon points="62,42 54,40 56,45 63,45" fill="none" stroke="#ff002a" stroke-width="1.5"/>
-                <!-- Wireframe grid lines -->
+                
                 <line x1="50" y1="18" x2="50" y2="78" stroke="rgba(0, 240, 255, 0.3)" stroke-width="1"/>
                 <line x1="20" y1="48" x2="80" y2="48" stroke="rgba(0, 240, 255, 0.3)" stroke-width="1"/>
               </svg>
@@ -179,9 +177,9 @@
           </div>
         </div>
 
-        <!-- Chat History -->
+      
         <div class="chat-history" id="chat-history">
-          <!-- Initial AI message -->
+          
           <div class="chat-message ai">
             <div class="msg-avatar-container">
               <svg viewBox="0 0 100 100" class="mini-hud-avatar-svg"><circle cx="50" cy="50" r="40" fill="none" stroke="#ff002a" stroke-width="2"/><circle cx="50" cy="50" r="25" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="2,2"/><circle cx="50" cy="50" r="5" fill="#ff002a"/></svg>
@@ -195,12 +193,12 @@
           </div>
         </div>
 
-        <!-- Suggested Prompt Chips -->
+      
         <div class="suggested-chips-container" id="suggested-chips">
-          <!-- Populated by JS from portfolioData.recentQueries -->
+         
         </div>
 
-        <!-- Chat Input Bar -->
+      
         <div class="chat-input-bar">
           <div class="input-corner-left"></div>
           <div class="input-corner-right"></div>
@@ -219,7 +217,6 @@
         <div class="chat-disclaimer">T.E.S.A AI Twin can make mistakes. But hey, even Stark Systems glitch sometimes. 😉</div>
       </div>
 
-      <!-- 2. ABOUT VIEW -->
       <div class="hud-view-content" id="view-about">
         <h2 class="view-title">ABOUT ME</h2>
         <div class="hud-scrollable-content">
@@ -241,49 +238,49 @@
         </div>
       </div>
 
-      <!-- 3. PROJECTS VIEW -->
+      
       <div class="hud-view-content" id="view-projects">
         <h2 class="view-title">PROJECTS</h2>
         <div class="hud-scrollable-content" id="projects-list">
-          <!-- Populated dynamically -->
+         
         </div>
       </div>
 
-      <!-- 4. SKILLS VIEW -->
+     
       <div class="hud-view-content" id="view-skills">
         <h2 class="view-title">SKILLS MATRIX</h2>
         <div class="hud-scrollable-content" id="skills-matrix">
-          <!-- Populated dynamically -->
+         
         </div>
       </div>
 
-      <!-- 5. EXPERIENCE VIEW -->
+      
       <div class="hud-view-content" id="view-experience">
         <h2 class="view-title">EXPERIENCE LOG</h2>
         <div class="hud-scrollable-content" id="experience-timeline">
-          <!-- Populated dynamically -->
+         
         </div>
       </div>
 
-      <!-- 6. ACHIEVEMENTS VIEW -->
+     
       <div class="hud-view-content" id="view-achievements">
         <h2 class="view-title">HONORS & ACHIEVEMENTS</h2>
         <div class="hud-scrollable-content" id="achievements-list">
-          <!-- Populated dynamically -->
+         
         </div>
       </div>
 
-      <!-- 7. STATS VIEW -->
+     
       <div class="hud-view-content" id="view-stats">
         <h2 class="view-title">WEB-SLINGER STATS</h2>
         <div class="hud-scrollable-content">
           <div class="stats-hud-grid" id="stats-hud-grid">
-            <!-- Populated dynamically -->
+        
           </div>
         </div>
       </div>
 
-      <!-- 8. GITHUB VIEW -->
+     
       <div class="hud-view-content" id="view-github">
         <h2 class="view-title">GITHUB CONTRIB ENGINE</h2>
         <div class="hud-scrollable-content">
@@ -291,7 +288,7 @@
             <h3 class="github-card-title">@Reshma-Thouti on GitHub</h3>
             <p class="github-subtitle">Simulating real-time contribution matrix...</p>
             <div class="github-grid" id="github-grid">
-              <!-- Grid boxes populated dynamically -->
+             
             </div>
             <div class="github-legend">
               <span>Less</span>
@@ -312,15 +309,15 @@
         </div>
       </div>
 
-      <!-- 9. LEARNING VIEW -->
+     
       <div class="hud-view-content" id="view-learning">
         <h2 class="view-title">LEARNING JOURNEY</h2>
         <div class="hud-scrollable-content" id="learning-journey-list">
-          <!-- Populated dynamically -->
+         
         </div>
       </div>
 
-      <!-- 10. FILES VIEW -->
+     
       <div class="hud-view-content" id="view-files">
         <h2 class="view-title">FILES & DOCUMENTATION</h2>
         <div class="hud-scrollable-content">
@@ -332,7 +329,7 @@
               <div>ACTION</div>
             </div>
             <div class="files-list" id="files-list">
-              <!-- Populated dynamically -->
+             
             </div>
           </div>
         </div>
@@ -340,10 +337,10 @@
 
     </section>
 
-    <!-- Right Sidebar -->
+   
     <aside class="hud-column sidebar-right" id="sidebar-right">
       
-      <!-- "At a Glance" Profile widget -->
+     
       <div class="hud-panel-card glance-card">
         <div class="glance-glow"></div>
         <span class="hud-panel-title">DEVELOPER AT A GLANCE</span>
@@ -380,46 +377,46 @@
         </div>
       </div>
 
-      <!-- "What I Can Do" Capabilities widget -->
+     
       <div class="hud-panel-card capabilities-card">
         <span class="hud-panel-title">SYMBIOTE CAPABILITIES</span>
         <ul class="capability-list" id="capability-list">
-          <!-- Populated dynamically -->
+         
         </ul>
       </div>
 
-      <!-- "Recent Conversations" widget -->
+     
       <div class="hud-panel-card conversations-card">
         <span class="hud-panel-title">RECENT CONVERSATIONS</span>
         <div class="recent-conversations-list" id="recent-queries-list">
-          <!-- Populated dynamically from portfolioData.recentQueries -->
+          
         </div>
       </div>
 
-      <!-- "System Status" widget with mesh avatar -->
+      
       <div class="hud-panel-card status-card">
         <span class="hud-panel-title">SYSTEM STATUS</span>
         <div class="status-grid">
           <div class="status-avatar-container">
             <div class="status-avatar-wireframe">
-              <!-- Wireframe face/mask mesh SVG -->
+            
               <svg viewBox="0 0 100 100" class="mesh-mask-svg">
-                <!-- Outer glow rings -->
+               
                 <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255, 0, 42, 0.2)" stroke-width="1"/>
                 <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(0, 240, 255, 0.2)" stroke-dasharray="5,3" stroke-width="1"/>
                 
-                <!-- Ironman/Spider-man style Tech Mesh -->
+                
                 <polygon points="50,15 70,25 78,45 68,75 50,88 32,75 22,45 30,25" fill="none" stroke="#ff002a" stroke-width="1.5"/>
                 <polygon points="50,25 64,32 70,45 62,68 50,78 38,68 30,45 36,32" fill="none" stroke="rgba(0, 240, 255, 0.6)" stroke-width="1"/>
                 <polygon points="50,35 58,40 60,45 56,58 50,65 44,58 40,45 42,40" fill="none" stroke="#ff002a" stroke-width="0.8"/>
                 
-                <!-- Radial axis lines -->
+               
                 <line x1="50" y1="15" x2="50" y2="88" stroke="rgba(255, 0, 42, 0.3)" stroke-width="1"/>
                 <line x1="22" y1="45" x2="78" y2="45" stroke="rgba(255, 0, 42, 0.3)" stroke-width="1"/>
                 <line x1="30" y1="25" x2="68" y2="75" stroke="rgba(0, 240, 255, 0.3)" stroke-width="0.8"/>
                 <line x1="70" y1="25" x2="32" y2="75" stroke="rgba(0, 240, 255, 0.3)" stroke-width="0.8"/>
                 
-                <!-- Eye triangles -->
+               
                 <polygon points="36,44 46,42 42,48" fill="#ff002a" opacity="0.8"/>
                 <polygon points="64,44 54,42 58,48" fill="#ff002a" opacity="0.8"/>
               </svg>
@@ -450,7 +447,7 @@
 
   </main>
 
-  <!-- Gemini Key Config Modal Overlay (Hidden by Default) -->
+
   <div class="modal-overlay" id="api-modal">
     <div class="modal-card">
       <div class="card-corner-top-left"></div>
@@ -472,12 +469,12 @@
     </div>
   </div>
 
-  <!-- API Settings Toggle Button floating at bottom right -->
+ 
   <button class="api-settings-floating-btn" id="btn-open-settings" title="Configure AI Key">
     <svg viewBox="0 0 24 24" width="20" height="20"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" fill="currentColor"/></svg>
   </button>
 
-  <!-- JavaScript Modules -->
+ 
   <script src="data.js?v=2.0"></script>
   <script src="app.js?v=2.0"></script>
 </body>
