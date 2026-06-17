@@ -1,7 +1,6 @@
-// C:\ai-twin\api\chat.js
 
 module.exports = async function handler(req, res) {
-  // Handle CORS options request
+
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,7 +30,6 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  // Print diagnostic log in Vercel console to help verify which key is being used
   console.log(`[T.E.S.A Proxy] Request received. Active API Key Prefix: "${apiKey.substring(0, 6)}..." (Length: ${apiKey.length})`);
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
@@ -64,12 +62,12 @@ module.exports = async function handler(req, res) {
             body: JSON.stringify(requestBody)
           });
 
-          // Success
+         
           if (response.ok) {
             break;
           }
 
-          // Retry only for Gemini overload
+         
           if (response.status === 503 && attempt < 3) {
             console.log(`[T.E.S.A Retry] Gemini busy. Retrying attempt ${attempt}/3`);
             await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
@@ -82,7 +80,6 @@ module.exports = async function handler(req, res) {
     if (!response.ok) {
       const errorText = await response.text();
       
-      // If it is a 404 error, list all models that this key has access to in the console logs
       if (response.status === 404) {
         try {
           const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
@@ -109,7 +106,7 @@ module.exports = async function handler(req, res) {
 
     const responseData = await response.json();
     
-    // Add CORS headers for the response
+   
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(200).json(responseData);
   } catch (err) {
