@@ -1,14 +1,14 @@
-/* C:\recruiter-ai-twin\app.js */
+
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Audio Engine (Synthesizer) ---
+ 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   let audioMuted = false;
 
   function playHudSound(type = 'click') {
     if (audioMuted) return;
     
-    // Resume audio context if suspended (browser security)
+   
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gain.connect(audioCtx.destination);
 
     if (type === 'click') {
-      // Short mechanical high-pitch beep
+     
       osc.type = 'sine';
       osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
       gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       osc.start();
       osc.stop(audioCtx.currentTime + 0.08);
     } else if (type === 'hover') {
-      // Extremely short subtle click
+     
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(800, audioCtx.currentTime);
       gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       osc.start();
       osc.stop(audioCtx.currentTime + 0.03);
     } else if (type === 'incoming') {
-      // Dual high-tech notification chime
+     
       osc.type = 'sine';
       osc.frequency.setValueAtTime(900, audioCtx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(1500, audioCtx.currentTime + 0.15);
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       osc.start();
       osc.stop(audioCtx.currentTime + 0.2);
     } else if (type === 'error') {
-      // Downwards buzz sound
+     
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(220, audioCtx.currentTime);
       osc.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.3);
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- Dynamic UI Data Binding ---
+ 
   const data = window.portfolioData;
 
   function initDataBindings() {
@@ -65,22 +65,22 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Set Document Title
+   
     document.title = `${data.profile.name} - Developer AI Twin & Portfolio`;
 
-    // Header Profile
+   
     document.getElementById("top-avatar").src = data.profile.avatar;
     document.getElementById("brand-title").textContent = data.profile.alias;
     document.getElementById("user-profile-name").textContent = data.profile.name.toUpperCase();
     
-    // Left Sidebar Note
+   
     document.getElementById("hud-dev-note").innerHTML = `"${data.profile.fromDeveloperNote}"`;
 
-    // Welcome Message in Chat
+   
     document.getElementById("chat-twin-title").textContent = data.profile.alias;
     document.getElementById("welcome-bubble").innerHTML = data.profile.welcomeMessage;
 
-    // Right Sidebar - At a Glance
+   
     document.getElementById("glance-avatar").src = data.profile.avatar;
     document.getElementById("glance-name").textContent = data.profile.name;
     document.getElementById("glance-subtitles").innerHTML = data.profile.subheadings.join(" &bull; ");
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // "What I Can Do" List
+   
     const capabilityList = document.getElementById("capability-list");
     capabilityList.innerHTML = "";
     data.whatICanDo.forEach(item => {
@@ -99,13 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
       capabilityList.appendChild(li);
     });
 
-    // "Recent Conversations" (Initially empty for the session)
+    
     const recentQueriesList = document.getElementById("recent-queries-list");
     if (recentQueriesList) {
       recentQueriesList.innerHTML = `<div style="font-family: var(--mono-font); font-size: 10px; color: var(--text-gray-dark); text-align: center; padding: 10px 0;">NO CONVERSATIONS IN THIS SESSION</div>`;
     }
 
-    // "Suggested Prompt Chips"
+  
     const chipsContainer = document.getElementById("suggested-chips");
     chipsContainer.innerHTML = "";
     data.suggestedQueries.forEach(query => {
@@ -121,22 +121,20 @@ document.addEventListener("DOMContentLoaded", () => {
       chipsContainer.appendChild(chip);
     });
 
-    // System Status Card
+   
     document.getElementById("sys-systems").textContent = data.systemStatus.systemsOperational ? "OPERATIONAL" : "DIAGNOSTIC";
     document.getElementById("sys-model").textContent = data.systemStatus.model;
     document.getElementById("sys-memory").textContent = data.systemStatus.memoryCore;
     document.getElementById("sys-shooters").textContent = data.systemStatus.webShooters;
 
-    // --- Tab Content Views Binding ---
-    
-    // 1. About Me View
+   
     document.getElementById("about-text-content").textContent = data.aboutMe.text;
     document.getElementById("edu-degree").textContent = data.aboutMe.education.degree;
     document.getElementById("edu-duration").textContent = data.aboutMe.education.duration;
     document.getElementById("edu-institution").textContent = data.aboutMe.education.institution;
     document.getElementById("edu-cgpa").textContent = data.aboutMe.education.cgpa;
 
-    // 2. Projects View
+  
     const projectsList = document.getElementById("projects-list");
     projectsList.innerHTML = "";
     data.projects.forEach(project => {
@@ -166,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
       projectsList.appendChild(card);
     });
 
-    // 3. Skills Matrix
     const skillsMatrix = document.getElementById("skills-matrix");
     skillsMatrix.innerHTML = '<div class="skills-grid-layout"></div>';
     const gridLayout = skillsMatrix.querySelector(".skills-grid-layout");
@@ -193,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gridLayout.appendChild(card);
     });
 
-    // 4. Experience Timeline
+   
     const experienceTimeline = document.getElementById("experience-timeline");
     experienceTimeline.innerHTML = "";
     data.experience.forEach(exp => {
@@ -214,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
       experienceTimeline.appendChild(item);
     });
 
-    // 5. Achievements List
+  
     const achievementsList = document.getElementById("achievements-list");
     achievementsList.innerHTML = "";
     data.achievements.forEach(ach => {
@@ -232,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
       achievementsList.appendChild(row);
     });
 
-    // 6. Developer Stats View
+  
     const statsHudGrid = document.getElementById("stats-hud-grid");
     statsHudGrid.innerHTML = "";
     Object.entries(data.stats.webSlingerStats).forEach(([key, val]) => {
@@ -245,13 +242,13 @@ document.addEventListener("DOMContentLoaded", () => {
       statsHudGrid.appendChild(card);
     });
 
-    // 7. GitHub Contribution Grid Simulation
+    
     const githubGrid = document.getElementById("github-grid");
     githubGrid.innerHTML = "";
-    // Generate 120 blocks for simulation
+   
     for (let i = 0; i < 120; i++) {
       const box = document.createElement("div");
-      // Randomly allocate levels with higher weight towards lower levels
+      
       const rand = Math.random();
       let level = 0;
       if (rand > 0.85) level = 4;
@@ -263,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
       githubGrid.appendChild(box);
     }
 
-    // 8. Learning Journey List
+   
     const learningList = document.getElementById("learning-journey-list");
     learningList.innerHTML = "";
     data.learningJourney.forEach(item => {
@@ -280,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
       learningList.appendChild(card);
     });
 
-    // 9. Files List
+   
     const filesList = document.getElementById("files-list");
     filesList.innerHTML = "";
     data.filesAndDocs.forEach(file => {
@@ -300,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- View Swapping System (Router) ---
+
   const navItems = document.querySelectorAll(".nav-item");
   const views = document.querySelectorAll(".hud-view-content");
 
@@ -310,11 +307,10 @@ document.addEventListener("DOMContentLoaded", () => {
       
       playHudSound("click");
       
-      // Update Active Navigation Item
+      
       navItems.forEach(n => n.classList.remove("active"));
       item.classList.add("active");
 
-      // Toggle Target View
       views.forEach(view => {
         view.classList.remove("active");
         if (view.id === `view-${tabName}`) {
@@ -322,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Animate progress fills when transitioning to the SKILLS view
+      
       if (tabName === 'skills') {
         setTimeout(() => {
           const fills = document.querySelectorAll(".progress-fill");
@@ -334,13 +330,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Add UI Hover Clicks
     item.addEventListener("mouseenter", () => {
       playHudSound("hover");
     });
   });
 
-  // --- Voice Input (Web Speech API) ---
+  
   const voiceBtn = document.getElementById("btn-voice-input");
   const inputField = document.getElementById("chat-input-field");
   let recognition;
@@ -369,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (event.error === 'not-allowed') {
         alert("Microphone access blocked or insecure origin.\n\nPlease enable microphone permissions in your site settings, and ensure you are accessing the page over HTTPS or http://localhost.");
       } else if (event.error === 'no-speech') {
-        // Silently reset
+       
       } else {
         alert(`Speech input failed: ${event.error}`);
       }
@@ -386,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const transcript = event.results[0][0].transcript;
       inputField.value = transcript;
       playHudSound("click");
-      // Send immediately
+     
       submitUserQuery(transcript);
     };
 
@@ -398,23 +393,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   } else {
-    // Hide or disable voice button if not supported
+   
     voiceBtn.style.opacity = '0.5';
     voiceBtn.title = 'Speech Recognition Not Supported';
   }
 
-  // --- Gemini API & Chat Logic ---
+
   const chatHistory = document.getElementById("chat-history");
   const sendBtn = document.getElementById("btn-send-message");
   
-  // Modals elements
+  
   const apiModal = document.getElementById("api-modal");
   const apiKeyInput = document.getElementById("api-key-input");
   const saveApiBtn = document.getElementById("btn-save-api");
   const closeModalBtn = document.getElementById("btn-close-modal");
   const openSettingsBtn = document.getElementById("btn-open-settings");
 
-  // Load API Key from localStorage
+  
   let apiKey = localStorage.getItem("gemini_api_key") || "";
 
   openSettingsBtn.addEventListener("click", () => {
@@ -453,7 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const authorName = sender === 'ai' ? data.profile.alias : 'YOU';
     
-    // Select correct avatar
+   
     let avatarSvg = '';
     if (sender === 'ai') {
       avatarSvg = `<svg viewBox="0 0 100 100" class="mini-hud-avatar-svg"><circle cx="50" cy="50" r="40" fill="none" stroke="#ff002a" stroke-width="2"/><circle cx="50" cy="50" r="25" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="2,2"/><circle cx="50" cy="50" r="5" fill="#ff002a"/></svg>`;
@@ -528,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- Prompt Engineering & AI Reasoning logic ---
+ 
   function getSystemPrompt() {
     return `You are ${data.profile.alias}, the advanced Stark Tech AI Twin of Reshma Thouti. Reshma is a B.Tech Computer Science & Engineering student at SR University seeking internships and full-stack software developer roles.
 
@@ -548,7 +543,7 @@ ${JSON.stringify(data, null, 2)}
   async function getGeminiResponse(question) {
     const sysPrompt = getSystemPrompt();
 
-    // 1. Try to use the Vercel Serverless Function proxy (secure key, works automatically)
+    
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -571,7 +566,7 @@ ${JSON.stringify(data, null, 2)}
         const errData = await response.json().catch(() => ({}));
         const errMsg = errData.error || `HTTP Status ${response.status}`;
         console.warn(`Vercel Proxy returned error: ${errMsg}`);
-        // If we are deployed on Vercel and the key is missing from environment variables, notify the user.
+
         if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
           return `<strong>T.E.S.A Cognitive Core Busy</strong><br><br>Gemini is currently experiencing high demand.<br><br>Please try again in a few seconds.`;
         }
@@ -580,7 +575,7 @@ ${JSON.stringify(data, null, 2)}
       console.warn("Could not reach Vercel API proxy (expected when running locally). Proceeding to client-side fallback...", err);
     }
 
-    // 2. Fallback to client-side API Key (from gear settings modal)
+   
     if (apiKey && (apiKey.trim().startsWith("AIzaSy") || apiKey.trim().startsWith("AQ."))) {
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
       const requestBody = {
@@ -624,7 +619,7 @@ ${JSON.stringify(data, null, 2)}
       }
     }
 
-    // 3. Fallback to simulated local mock response (if no keys are configured)
+ 
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(getLocalMockResponse(question));
@@ -640,7 +635,7 @@ ${JSON.stringify(data, null, 2)}
       .replace(/\n/g, '<br>');
   }
 
-  // --- Local Fallback Keyword Matching (For Keyless Demo) ---
+ 
   function getLocalMockResponse(question) {
     const q = question.toLowerCase().trim();
 
@@ -664,7 +659,7 @@ ${JSON.stringify(data, null, 2)}
     }
 
     if (q.includes("project") || q.includes("build") || q.includes("done")) {
-      // Specific synergy logic in mock form
+     
       if (q.includes("chat") || q.includes("whiteboard") || q.includes("real-time") || q.includes("collab")) {
         return `Reshma hasn't built a real-time chat app directly, but based on her experience: she developed <strong>LeetSync</strong> which uses MutationObserver DOM listeners and background Service Workers to track browser events and sync them to GitHub REST APIs. Combining these background workers and REST pipelines with standard WebSockets, she could easily construct a real-time collaborative coding whiteboard. Her Java MVC backend skills (used in <strong>Job Tracker Pro</strong>) are fully equipped to handle high-concurrency systems. 🚀`;
       }
@@ -720,12 +715,10 @@ ${JSON.stringify(data, null, 2)}
   function updateRecentQueries(query) {
     if (!query || !query.trim()) return;
     
-    // Clean duplicates and push to top of session log
+  
     sessionQueries = sessionQueries.filter(q => q.toLowerCase().trim() !== query.toLowerCase().trim());
     sessionQueries.unshift(query);
-    sessionQueries = sessionQueries.slice(0, 4); // Keep last 4 queries
-
-    // Render Recent Conversations in right sidebar with real-time stamp
+    sessionQueries = sessionQueries.slice(0, 4); 
     const recentQueriesList = document.getElementById("recent-queries-list");
     if (recentQueriesList) {
       recentQueriesList.innerHTML = "";
@@ -828,22 +821,22 @@ ${JSON.stringify(data, null, 2)}
       if (aboutSection) {
         const headingElements = aboutSection.querySelectorAll('.display-heading');
         if (headingElements.length >= 4) {
-          const cgpaVal = headingElements[1].textContent.trim(); // "9.52"
-          const leetCodeVal = headingElements[2].textContent.trim(); // "300+"
+          const cgpaVal = headingElements[1].textContent.trim(); 
+          const leetCodeVal = headingElements[2].textContent.trim(); 
           
-          // Update details in memory
+         
           data.stats.webSlingerStats["CGPA"] = `${cgpaVal} / 10`;
           data.stats.webSlingerStats["LeetCode Problems"] = leetCodeVal;
           data.aboutMe.education.cgpa = `${cgpaVal}/10`;
           
-          // Update CGPA in About tab
+         
           const eduCgpaElement = document.getElementById("edu-cgpa");
           if (eduCgpaElement) eduCgpaElement.textContent = `${cgpaVal}/10`;
           
-          // Update CGPA card in About tab stats
+          
           const cgpaHeaderList = aboutSection.querySelectorAll('.display-heading');
           
-          // Re-render Developer Stats grid to bind new numbers
+          
           const statsHudGrid = document.getElementById("stats-hud-grid");
           if (statsHudGrid) {
             statsHudGrid.innerHTML = "";
@@ -869,19 +862,19 @@ ${JSON.stringify(data, null, 2)}
   function submitUserQuery(text) {
     if (!text.trim()) return;
 
-    // Clear input
+   
     inputField.value = "";
 
-    // Play HUD mechanical sound
+   
     playHudSound("click");
 
-    // Prepend to Recent Queries log
+    
     updateRecentQueries(text);
 
-    // Append user message
+    
     appendChatMessage("user", text);
 
-    // Typing delay simulation
+   
     appendTypingIndicator();
 
     getGeminiResponse(text).then(aiResponse => {
@@ -890,7 +883,7 @@ ${JSON.stringify(data, null, 2)}
     });
   }
 
-  // Bind input trigger keys
+  
   inputField.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       submitUserQuery(inputField.value);
@@ -901,13 +894,13 @@ ${JSON.stringify(data, null, 2)}
     submitUserQuery(inputField.value);
   });
 
-  // Bind top navbar profile widget click to open settings modal
+ 
   document.getElementById("user-profile-widget").addEventListener("click", () => {
     playHudSound("click");
     apiModal.classList.add("active");
   });
 
-  // Run initialization
+ 
   initDataBindings();
   fetchRealGithubActivity();
   syncWithMainPortfolio();
