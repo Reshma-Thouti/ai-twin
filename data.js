@@ -1,10 +1,10 @@
-// C:\recruiter-ai-twin\data.js
+
 
 const portfolioData = {
   profile: {
     name: "Reshma Thouti",
     role: "Full-Stack Developer & CS Engineer",
-    alias: "T.E.S.A", // AI Twin alias
+    alias: "T.E.S.A", 
     subheadings: [
       "Full Stack Developer",
       "CS Engineer @ SR University",
@@ -20,8 +20,8 @@ const portfolioData = {
   stats: {
     projectsCount: "06+",
     techStacksCount: "10+",
-    commitsCount: "500+", // general estimate
-    caffeineLevel: 120, // Percentage
+    commitsCount: "500+",
+    caffeineLevel: 120,
     webSlingerStats: {
       "LeetCode Problems": "300+",
       "CGPA": "9.52 / 10",
@@ -239,7 +239,7 @@ const portfolioData = {
   }
 };
 
-// Export for use in other files if needed, or bind to window in browser
+
 if (typeof window !== 'undefined') {
   window.portfolioData = portfolioData;
 }
