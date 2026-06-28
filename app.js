@@ -456,16 +456,12 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       row.querySelector(".btn-file-dl").addEventListener("click", () => {
         playHudSound("incoming");
-        if (file.name === "Reshma_Thouti_Resume.pdf") {
-          generateDynamicResumePDF();
-        } else {
-          const link = document.createElement("a");
-          link.href = `./assets/${file.name}`;
-          link.download = file.name;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
+        const link = document.createElement("a");
+        link.href = `./assets/${file.name}`;
+        link.download = file.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       });
       filesList.appendChild(row);
     });
@@ -495,122 +491,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function generateDynamicResumePDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    const navy = [12, 20, 36];
-    const red = [255, 0, 42];
-    const darkGrey = [60, 60, 60];
-    const margin = 20;
-    let y = 20;
-    
-    // Header Name
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(24);
-    doc.setTextColor(navy[0], navy[1], navy[2]);
-    doc.text(data.profile.name.toUpperCase(), margin, y);
-    y += 8;
-    
-    // Role Subtitle
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.setTextColor(red[0], red[1], red[2]);
-    doc.text(data.profile.role, margin, y);
-    y += 8;
-    
-    // Line separator
-    doc.setDrawColor(red[0], red[1], red[2]);
-    doc.setLineWidth(0.5);
-    doc.line(margin, y, 190, y);
-    y += 8;
-    
-    // Contact/Meta details
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.setTextColor(darkGrey[0], darkGrey[1], darkGrey[2]);
-    doc.text("Email: reshma.thouti@example.com   |   Github: github.com/Reshma-Thouti   |   SR University", margin, y);
-    y += 12;
-    
-    // Education section
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.setTextColor(navy[0], navy[1], navy[2]);
-    doc.text("EDUCATION", margin, y);
-    y += 6;
-    
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(11);
-    doc.setTextColor(0, 0, 0);
-    doc.text(data.aboutMe.education.degree, margin, y);
-    doc.setFont("helvetica", "normal");
-    doc.text(data.aboutMe.education.duration, 190 - doc.getTextWidth(data.aboutMe.education.duration), y);
-    y += 5;
-    
-    doc.setTextColor(darkGrey[0], darkGrey[1], darkGrey[2]);
-    doc.text(`${data.aboutMe.education.institution} (CGPA: ${data.aboutMe.education.cgpa})`, margin, y);
-    y += 12;
-    
-    // Technical Skills
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.setTextColor(navy[0], navy[1], navy[2]);
-    doc.text("TECHNICAL SKILLS", margin, y);
-    y += 6;
-    
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    
-    data.skills.categories.forEach(cat => {
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(0, 0, 0);
-      doc.text(`${cat.name}: `, margin, y);
-      
-      doc.setFont("helvetica", "normal");
-      doc.setTextColor(darkGrey[0], darkGrey[1], darkGrey[2]);
-      const skillList = cat.items.map(sk => `${sk.name} (${sk.level}%)`).join(", ");
-      
-      const splitSkills = doc.splitTextToSize(skillList, 130);
-      doc.text(splitSkills, margin + 40, y);
-      y += (splitSkills.length * 5) + 1;
-    });
-    y += 8;
-    
-    // Selected Projects
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.setTextColor(navy[0], navy[1], navy[2]);
-    doc.text("PROJECTS & REPOS", margin, y);
-    y += 6;
-    
-    data.projects.forEach(proj => {
-      if (y > 250) {
-        doc.addPage();
-        y = 20;
-      }
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(11);
-      doc.setTextColor(0, 0, 0);
-      doc.text(proj.title, margin, y);
-      
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      doc.setTextColor(red[0], red[1], red[2]);
-      doc.text(`[ ${proj.techStack.join(", ")} ]`, margin + doc.getTextWidth(proj.title) + 5, y - 0.5);
-      y += 5;
-      
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(darkGrey[0], darkGrey[1], darkGrey[2]);
-      
-      const splitDesc = doc.splitTextToSize(proj.description, 170);
-      doc.text(splitDesc, margin, y);
-      y += (splitDesc.length * 5) + 4;
-    });
-    
-    doc.save("Reshma_Thouti_Resume.pdf");
-    playHudSound("click");
-  }
+
 
   // --- View Swapping System (Router) ---
   const navItems = document.querySelectorAll(".nav-item");
