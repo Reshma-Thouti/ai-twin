@@ -1,10 +1,10 @@
-
+// C:\recruiter-ai-twin\data.js
 
 const portfolioData = {
   profile: {
     name: "Reshma Thouti",
     role: "Full-Stack Developer & CS Engineer",
-    alias: "T.E.S.A", 
+    alias: "T.E.S.A", // AI Twin alias
     subheadings: [
       "Full Stack Developer",
       "CS Engineer @ SR University",
@@ -18,15 +18,15 @@ const portfolioData = {
     wireframeAvatar: "assets/wireframe_avatar.png"
   },
   stats: {
-    projectsCount: "06+",
+    projectsCount: "07+",
     techStacksCount: "10+",
-    commitsCount: "500+",
-    caffeineLevel: 120,
+    commitsCount: "500+", // general estimate
+    caffeineLevel: 120, // Percentage
     webSlingerStats: {
       "LeetCode Problems": "300+",
       "CGPA": "9.52 / 10",
       "Academic Year": "2023 - Present",
-      "Projects Built": "06"
+      "Projects Built": "07"
     }
   },
   aboutMe: {
@@ -80,6 +80,22 @@ const portfolioData = {
     ]
   },
   projects: [
+    {
+      id: "aitwin",
+      title: "T.E.S.A (AI Twin)",
+      description: "An advanced, interactive developer portfolio AI Twin (built me just like that!) that acts as a cognitive Stark Tech assistant to answer developer and recruiter queries. Features real-time speech recognition, synthesized voice output, dynamic canvas hologram visualizer, and serverless proxy tunneling.",
+      techStack: ["HTML5 Canvas", "Web Audio API", "SpeechSynthesis", "SpeechRecognition", "jsPDF", "Node.js (Vercel Edge Proxy)", "Gemini API"],
+      features: [
+        "Dynamic canvas visualizer rendering rotating rings and audio-sensitive waveforms.",
+        "Synthesized voice output (Friday Mode) reading replies aloud when toggled.",
+        "Speech recognition system translating voice commands into query strings.",
+        "Vercel Edge functions proxying requests to Gemini API securely with dual model failovers.",
+        "On-the-fly dynamic PDF Resume Compiler compiled directly from portfolio data."
+      ],
+      impact: "Provides interactive, secure recruiter engagement, proving full-stack execution and creative Stark Tech design.",
+      demoUrl: "#",
+      githubUrl: "https://github.com/Reshma-Thouti"
+    },
     {
       id: "leetsync",
       title: "LeetSync",
@@ -239,7 +255,7 @@ const portfolioData = {
   }
 };
 
-
+// Export for use in other files if needed, or bind to window in browser
 if (typeof window !== 'undefined') {
   window.portfolioData = portfolioData;
 }

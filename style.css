@@ -1971,3 +1971,111 @@ body {
     display: none;
   }
 }
+
+/* Upgraded TESA Features Support */
+
+/* Visualizer Canvas style */
+.visualizer-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+  z-index: 2;
+  filter: drop-shadow(0 0 4px var(--accent-cyan-glow));
+}
+
+/* Speaker Toggle Button */
+.speaker-btn {
+  border: 1px solid rgba(255, 0, 42, 0.4);
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-gray-dark);
+  transition: all 0.25s ease;
+}
+
+.speaker-btn:hover {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+  box-shadow: 0 0 8px var(--accent-red-glow);
+}
+
+.speaker-btn.active {
+  color: var(--accent-red) !important;
+  border-color: var(--accent-red) !important;
+  box-shadow: 0 0 10px var(--accent-red-glow) !important;
+  animation: pulse-red-border 2s infinite;
+}
+
+@keyframes pulse-red-border {
+  0% { box-shadow: 0 0 2px var(--accent-red-glow); }
+  50% { box-shadow: 0 0 10px var(--accent-red-glow); }
+  100% { box-shadow: 0 0 2px var(--accent-red-glow); }
+}
+
+/* Markdown Rendering in Chat Messages */
+.msg-bubble ul, .msg-bubble ol {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 20px;
+}
+
+.msg-bubble li {
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: var(--text-gray);
+}
+
+.msg-bubble ul {
+  list-style-type: square;
+}
+
+.msg-bubble li strong {
+  color: var(--text-white);
+}
+
+.msg-bubble p {
+  margin-bottom: 8px;
+}
+
+.msg-bubble pre {
+  background: rgba(4, 6, 12, 0.95);
+  border: 1px solid var(--border-cyan);
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 10px 0;
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.05);
+}
+
+.msg-bubble code.mono-code {
+  font-family: var(--mono-font);
+  background: rgba(255, 0, 42, 0.08);
+  border: 1px solid rgba(255, 0, 42, 0.2);
+  color: var(--text-red);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.msg-bubble pre code {
+  font-family: var(--mono-font);
+  color: var(--accent-cyan);
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  display: block;
+}
+
+.msg-bubble h3, .msg-bubble h4 {
+  font-family: var(--hud-font);
+  color: var(--accent-cyan);
+  font-size: 12px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 4px var(--accent-cyan-glow);
+}
