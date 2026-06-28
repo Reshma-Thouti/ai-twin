@@ -459,7 +459,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (file.name === "Reshma_Thouti_Resume.pdf") {
           generateDynamicResumePDF();
         } else {
-          alert(`Initializing download process for ${file.name}... (Simulated link)`);
+          const link = document.createElement("a");
+          link.href = `./assets/${file.name}`;
+          link.download = file.name;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       });
       filesList.appendChild(row);

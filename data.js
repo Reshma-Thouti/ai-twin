@@ -231,7 +231,6 @@ const portfolioData = {
   ],
   filesAndDocs: [
     { name: "Reshma_Thouti_Resume.pdf", size: "124 KB", type: "PDF" },
-    { name: "Academic_Transcript.pdf", size: "1.8 MB", type: "PDF" },
     { name: "NVIDIA_DL_Certificate.pdf", size: "640 KB", type: "PDF" }
   ],
   whatICanDo: [
