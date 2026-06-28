@@ -150,11 +150,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!voiceOutputActive) return;
     window.speechSynthesis.cancel();
     
-    // Strip HTML tags and normalize spaces
-    const cleanText = text.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+    // 1. Strip HTML tags and normalize spaces
+    let cleanText = text.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
     if (!cleanText) return;
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
+    // 2. Replace T.E.S.A / t.e.s.a with Tesa so it's pronounced naturally as a word
+    cleanText = cleanText.replace(/\bT\.E\.S\.A\b/g, "Tesa").replace(/\bt\.e\.s\.a\b/g, "tesa");
+
+    // 3. Strip all emojis and special icons so they aren't read out loud
+    cleanText = cleanText.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{2600}-\u{26FF}]/gu, "");
+
+    const utterance = new SpeechSynthesisUtterance(cleanText.trim());
     const voices = window.speechSynthesis.getVoices();
     const enVoices = voices.filter(v => v.lang.startsWith("en"));
     if (enVoices.length > 0) {
