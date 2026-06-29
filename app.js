@@ -289,6 +289,33 @@ document.addEventListener("DOMContentLoaded", () => {
       chipsContainer.appendChild(chip);
     });
 
+    // Special Stark Tech Action Chips
+    const quizChip = document.createElement("button");
+    quizChip.className = "prompt-chip special-quiz-chip";
+    quizChip.style.borderColor = "var(--accent-red)";
+    quizChip.style.color = "var(--accent-red)";
+    quizChip.innerHTML = `
+      <svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H5c0-3.87 3.13-7 7-7s7 3.13 7 7c0 1.11-.45 2.12-1.17 2.85z" fill="currentColor"/></svg>
+      <span>Stark Trivia Quiz</span>
+    `;
+    quizChip.addEventListener("click", () => {
+      startTriviaQuiz();
+    });
+    chipsContainer.appendChild(quizChip);
+
+    const roastChip = document.createElement("button");
+    roastChip.className = "prompt-chip special-roast-chip";
+    roastChip.style.borderColor = "var(--accent-cyan)";
+    roastChip.style.color = "var(--accent-cyan)";
+    roastChip.innerHTML = `
+      <svg viewBox="0 0 24 24" width="12" height="12"><path d="M12.05 18.05c1.1 0 1.95-.9 1.95-1.95v-4.1h-3.9v4.1c0 1.05.85 1.95 1.95 1.95zm-4.1-10c-1.1 0-1.95.9-1.95 1.95v4.1h3.9v-4.1c0-1.05-.85-1.95-1.95-1.95zm8.2 0c-1.1 0-1.95.9-1.95 1.95v4.1h3.9v-4.1c0-1.05-.85-1.95-1.95-1.95z" fill="currentColor"/></svg>
+      <span>Roast My Code</span>
+    `;
+    roastChip.addEventListener("click", () => {
+      startCodeRoaster();
+    });
+    chipsContainer.appendChild(roastChip);
+
     // System Status Card
     document.getElementById("sys-systems").textContent = data.systemStatus.systemsOperational ? "OPERATIONAL" : "DIAGNOSTIC";
     document.getElementById("sys-model").textContent = data.systemStatus.model;
@@ -449,28 +476,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 9. Files List
-    const filesList = document.getElementById("files-list");
-    filesList.innerHTML = "";
-    data.filesAndDocs.forEach(file => {
-      const row = document.createElement("div");
-      row.className = "files-row";
-      row.innerHTML = `
-        <span class="file-name" title="${file.name}">${file.name}</span>
-        <span>${file.size}</span>
-        <span>${file.type}</span>
-        <button class="btn-file-dl">DOWNLOAD</button>
-      `;
-      row.querySelector(".btn-file-dl").addEventListener("click", () => {
-        playHudSound("incoming");
-        const link = document.createElement("a");
-        link.href = `./assets/${file.name}`;
-        link.download = file.name;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    window.initFilesView = function() {
+      const filesList = document.getElementById("files-list");
+      if (!filesList) return;
+      filesList.innerHTML = "";
+      data.filesAndDocs.forEach(file => {
+        const row = document.createElement("div");
+        row.className = "files-row";
+        row.innerHTML = `
+          <span class="file-name" title="${file.name}">${file.name}</span>
+          <span>${file.size}</span>
+          <span>${file.type}</span>
+          <button class="btn-file-dl">DOWNLOAD</button>
+        `;
+        row.querySelector(".btn-file-dl").addEventListener("click", () => {
+          playHudSound("incoming");
+          logInteraction("download", file.name);
+          
+          if (file.name === "Stark_Certified_Recruiter.pdf") {
+            const name = prompt("Enter your name for the Stark Certification:", "Creative Recruiter");
+            generateStarkCertificate(name || "Creative Recruiter");
+          } else {
+            const link = document.createElement("a");
+            link.href = `./assets/${file.name}`;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+        });
+        filesList.appendChild(row);
       });
-      filesList.appendChild(row);
-    });
+    };
+    initFilesView();
 
     // Add speaker toggle button listener (Voice Output Friday Mode)
     const speakerToggleBtn = document.getElementById("btn-speaker-toggle");
@@ -508,6 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const tabName = item.getAttribute("data-tab");
       
       playHudSound("click");
+      logInteraction("tab-swap", tabName);
       
       // Update Active Navigation Item
       navItems.forEach(n => n.classList.remove("active"));
@@ -716,6 +755,38 @@ ${JSON.stringify(data, null, 2)}
   }
 
   async function getGeminiResponse(question) {
+    if (question.toLowerCase().startsWith("/roast")) {
+      const code = question.slice(6).trim();
+      if (!code) {
+        return `<strong>T.E.S.A Code Roaster Diagnostics:</strong><br><br>No code fragment deployed on the console.<br><br>Usage: <code>/roast [your code here]</code>`;
+      }
+      
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question: `Please do a hilarious, highly sarcastic Stark-tech style code roast for this code fragment: \n\n${code}`,
+            systemPrompt: "You are T.E.S.A, Reshma's Stark-themed AI twin. Roast the user's code fragment sarcastically and technically, pointing out time complexity issues, spaghetti logic, bad variable names, or design pattern bugs. Keep it extremely funny and technical."
+          })
+        });
+
+        if (response.ok) {
+          const responseData = await response.json();
+          if (responseData.candidates && responseData.candidates[0] && responseData.candidates[0].content.parts[0].text) {
+            return formatMarkdown(responseData.candidates[0].content.parts[0].text);
+          }
+        }
+      } catch (err) {
+        console.warn("Telemetry connection failed for live roast. Using local diagnostic mock.");
+      }
+
+      return `<strong>T.E.S.A Code Roast Diagnostics:</strong><br><br>
+        - <strong>Complexity:</strong> O(infinity) for execution time. Was this code written by a web-slinging spider typing on a keyboard?<br>
+        - <strong>Syntax:</strong> Looks like legacy Stark industries firmware from 2008. We detected trace elements of spaghetti logic.<br>
+        - <strong>Verdict:</strong> Needs complete core re-initialization. Reshma Thouti would balance a binary tree in her sleep before compiling this. 🕸️`;
+    }
+
     const sysPrompt = getSystemPrompt();
 
     // 1. Try to use the Vercel Serverless Function proxy (secure key, works automatically)
@@ -1039,24 +1110,336 @@ ${JSON.stringify(data, null, 2)}
     }
   }
 
+  // --- TELEMETRY LOGGER ---
+  async function logInteraction(type, query, metadata = {}) {
+    try {
+      fetch("/api/log-interaction", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type, query, metadata })
+      }).catch(err => console.warn("KV Logging failed offline:", err));
+      
+      const localLogs = JSON.parse(localStorage.getItem("tesa_local_logs") || "[]");
+      localLogs.unshift({
+        type,
+        query: query || "",
+        metadata,
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem("tesa_local_logs", JSON.stringify(localLogs.slice(0, 500)));
+    } catch(e) {
+      console.warn("Local logging error:", e);
+    }
+  }
+
+  // --- STARK TECH QUIZ STATE MACHINE ---
+  let quizActive = false;
+  let quizStep = 0;
+  let quizScore = 0;
+  
+  const quizQuestions = [
+    {
+      question: "<strong>Question 1 of 3:</strong> What is the average time complexity of searching in a Balanced Binary Search Tree (like an AVL or Red-Black tree)?",
+      choices: {
+        A: "O(1)",
+        B: "O(log N)",
+        C: "O(N)",
+        D: "O(N log N)"
+      },
+      correct: "B"
+    },
+    {
+      question: "<strong>Question 2 of 3:</strong> In Python, which standard library package bypasses the Global Interpreter Lock (GIL) by spawning sub-processes?",
+      choices: {
+        A: "threading",
+        B: "asyncio",
+        C: "multiprocessing",
+        D: "concurrent.futures.ThreadPoolExecutor"
+      },
+      correct: "C"
+    },
+    {
+      question: "<strong>Question 3 of 3:</strong> Which Chrome Extension MV3 API provides declarative routing controls to redirect requests without service worker overhead?",
+      choices: {
+        A: "chrome.tabs",
+        B: "chrome.declarativeNetRequest",
+        C: "chrome.webRequest",
+        D: "chrome.runtime"
+      },
+      correct: "B"
+    }
+  ];
+
+  window.startTriviaQuiz = function() {
+    playHudSound("incoming");
+    quizActive = true;
+    quizStep = 0;
+    quizScore = 0;
+    
+    appendChatMessage("ai", "⚡ <strong>DIAGNOSTIC TRIVIA INITIATED</strong> ⚡<br>T.E.S.A systems require verification. Answer 3 technical questions correctly to unlock the <strong>Stark Certified Recruiter Certificate</strong>.<br><br>Starting now...", true);
+    
+    setTimeout(() => {
+      askQuizQuestion();
+    }, 1200);
+  };
+
+  function askQuizQuestion() {
+    const qInfo = quizQuestions[quizStep];
+    let msgHtml = `${qInfo.question}<br><br>`;
+    
+    appendChatMessage("ai", msgHtml, true);
+
+    const choicesContainer = document.createElement("div");
+    choicesContainer.className = "quiz-choices-container";
+    
+    Object.entries(qInfo.choices).forEach(([key, text]) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-choice-chip";
+      btn.textContent = `${key}) ${text}`;
+      btn.addEventListener("click", () => {
+        submitUserQuery(key);
+      });
+      choicesContainer.appendChild(btn);
+    });
+    
+    const chatHistory = document.getElementById("chat-history-container");
+    if (chatHistory) {
+      const lastMsgBubble = chatHistory.lastElementChild.querySelector(".msg-bubble");
+      if (lastMsgBubble) {
+        lastMsgBubble.appendChild(choicesContainer);
+      }
+    }
+  }
+
+  function handleQuizAnswer(answer) {
+    const qInfo = quizQuestions[quizStep];
+    const normalizedAns = answer.toUpperCase().trim();
+    
+    if (normalizedAns === qInfo.correct) {
+      quizScore++;
+      playHudSound("incoming");
+      appendChatMessage("ai", `✔️ <strong>CORRECT!</strong> Systems online.`, true);
+    } else {
+      playHudSound("error");
+      appendChatMessage("ai", `❌ <strong>INCORRECT.</strong> The correct answer was <strong>${qInfo.correct}</strong>.`, true);
+    }
+    
+    quizStep++;
+    
+    setTimeout(() => {
+      if (quizStep < quizQuestions.length) {
+        askQuizQuestion();
+      } else {
+        finishQuiz();
+      }
+    }, 1500);
+  }
+
+  function finishQuiz() {
+    quizActive = false;
+    logInteraction("quiz-score", `${quizScore}/3`);
+    
+    if (quizScore === 3) {
+      playHudSound("incoming");
+      
+      const exists = data.filesAndDocs.some(f => f.name === "Stark_Certified_Recruiter.pdf");
+      if (!exists) {
+        data.filesAndDocs.push({
+          name: "Stark_Certified_Recruiter.pdf",
+          size: "45 KB",
+          type: "PDF"
+        });
+        initFilesView();
+      }
+      
+      appendChatMessage("ai", `🎉 <strong>VERIFICATION COMPLETE! (Score: 3/3)</strong><br><br>Excellent work, Recruiter. You have proven your technical expertise. I have unlocked your specialized <strong>Stark Certified Recruiter Certificate</strong>. You can download it directly under the <strong>FILES</strong> view tab!`, true);
+    } else {
+      playHudSound("error");
+      appendChatMessage("ai", `⚠️ <strong>VERIFICATION FAILED (Score: ${quizScore}/3)</strong><br><br>Access reward locked. You need a perfect 3/3 score. Click the **Stark Trivia Quiz** chip to try again!`, true);
+    }
+  }
+  
+  // Stark Certified Recruiter Certificate PDF compiler
+  function generateStarkCertificate(recruiterName = "Creative Recruiter") {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("landscape");
+    
+    const darkNavy = [10, 16, 26];
+    const red = [255, 0, 42];
+    const gold = [212, 175, 55];
+    
+    doc.setDrawColor(red[0], red[1], red[2]);
+    doc.setLineWidth(2);
+    doc.rect(10, 10, 277, 190);
+    
+    doc.setDrawColor(gold[0], gold[1], gold[2]);
+    doc.setLineWidth(0.5);
+    doc.rect(14, 14, 269, 182);
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(26);
+    doc.setTextColor(red[0], red[1], red[2]);
+    doc.text("STARK DIAGNOSTIC ARENA VERIFIED", 148, 45, { align: "center" });
+    
+    doc.setFontSize(14);
+    doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
+    doc.text("THIS IS TO CERTIFY THAT", 148, 70, { align: "center" });
+    
+    doc.setFont("helvetica", "bolditalic");
+    doc.setFontSize(22);
+    doc.setTextColor(gold[0], gold[1], gold[2]);
+    doc.text(recruiterName.toUpperCase(), 148, 95, { align: "center" });
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(100, 100, 100);
+    const descText = "Has successfully navigated Reshma Thouti's AI Twin diagnostic testing suite, demonstrating proficiency in evaluating advanced Full-Stack Engineering, browser automation, and computer science systems engineering.";
+    const splitText = doc.splitTextToSize(descText, 200);
+    doc.text(splitText, 148, 115, { align: "center" });
+    
+    doc.setDrawColor(120, 120, 120);
+    doc.line(50, 160, 120, 160);
+    doc.line(177, 160, 247, 160);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text("T.E.S.A (AI Twin Signature)", 85, 170, { align: "center" });
+    doc.text("Reshma Thouti (Symbiote Creator)", 212, 170, { align: "center" });
+    
+    doc.save("Stark_Certified_Recruiter.pdf");
+    playHudSound("click");
+  }
+
+  // --- LIVE CODE ROASTER ---
+  window.startCodeRoaster = function() {
+    playHudSound("incoming");
+    appendChatMessage("ai", `🔥 <strong>LIVE CODE ROASTER INITIALIZED</strong> 🔥<br><br>Submit a block of code by typing <strong>/roast [your code]</strong> in the chat input below (e.g. <code>/roast def hello(): print('spaghetti')</code>), and T.E.S.A will run a sarcastic code-review diagnostic!`, true);
+  };
+
+  // --- ADMIN PORTAL PANEL CONTROLS ---
+  const secretTrigger = document.querySelector(".status-avatar-container");
+  if (secretTrigger) {
+    secretTrigger.addEventListener("dblclick", () => {
+      playHudSound("click");
+      document.getElementById("admin-passcode-modal").classList.add("active");
+    });
+  }
+
+  const passcodeModal = document.getElementById("admin-passcode-modal");
+  const passcodeInput = document.getElementById("admin-passcode-input");
+  const submitPasscodeBtn = document.getElementById("btn-submit-passcode");
+  const closePasscodeBtn = document.getElementById("btn-close-passcode-modal");
+
+  if (closePasscodeBtn) {
+    closePasscodeBtn.addEventListener("click", () => {
+      playHudSound("click");
+      passcodeModal.classList.remove("active");
+    });
+  }
+
+  if (submitPasscodeBtn) {
+    submitPasscodeBtn.addEventListener("click", () => {
+      const password = passcodeInput.value.trim();
+      if (!password) return;
+
+      fetch("/api/admin-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Invalid passcode");
+        return res.json();
+      })
+      .then(data => {
+        playHudSound("incoming");
+        passcodeModal.classList.remove("active");
+        passcodeInput.value = "";
+        localStorage.setItem("tesa_admin_token", data.token);
+        switchToAdminDashboard(data.token);
+      })
+      .catch(err => {
+        playHudSound("error");
+        alert("Core passcode access denied.");
+      });
+    });
+  }
+
+  function switchToAdminDashboard(token) {
+    navItems.forEach(n => n.classList.remove("active"));
+    views.forEach(v => v.classList.remove("active"));
+    const adminView = document.getElementById("view-admin");
+    if (adminView) adminView.classList.add("active");
+    loadAnalyticsDashboard(token);
+  }
+
+  function loadAnalyticsDashboard(token) {
+    fetch("/api/get-analytics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("admin-stat-queries").textContent = data.stats.queries;
+      document.getElementById("admin-stat-downloads").textContent = data.stats.downloads;
+      document.getElementById("admin-stat-quizzes").textContent = data.stats.quizzes;
+      
+      const logsList = document.getElementById("admin-logs-list");
+      if (logsList) {
+        logsList.innerHTML = "";
+        let logs = data.logs || [];
+        if (data.status === 'mocked') {
+          const localLogs = JSON.parse(localStorage.getItem("tesa_local_logs") || "[]");
+          logs = [...localLogs, ...logs];
+        }
+        
+        logs.forEach(log => {
+          const row = document.createElement("div");
+          row.className = "admin-log-row";
+          const time = new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          const date = new Date(log.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' });
+          
+          row.innerHTML = `
+            <span class="admin-log-time">${date} ${time}</span>
+            <span class="admin-log-type ${log.type}">${log.type}</span>
+            <span class="admin-log-details" title="${log.query}">${log.query}</span>
+          `;
+          logsList.appendChild(row);
+        });
+      }
+    })
+    .catch(err => console.error("Dashboard load failed:", err));
+  }
+
+  // --- SUBMIT USER QUERY INTERCEPTOR ---
   function submitUserQuery(text) {
     if (!text.trim()) return;
 
-    // Clear input
     inputField.value = "";
-
-    // Play HUD mechanical sound
     playHudSound("click");
-
-    // Prepend to Recent Queries log
     updateRecentQueries(text);
-
-    // Append user message
     appendChatMessage("user", text);
 
-    // Typing delay simulation
-    appendTypingIndicator();
+    // 1. Intercept quiz responses
+    if (quizActive) {
+      handleQuizAnswer(text);
+      return;
+    }
 
+    const cleanText = text.toLowerCase().trim();
+
+    // 2. Intercept admin view access shortcut
+    if (cleanText === "/admin") {
+      document.getElementById("admin-passcode-modal").classList.add("active");
+      return;
+    }
+
+    // 3. Log query telemetry
+    logInteraction("query", text);
+
+    appendTypingIndicator();
     getGeminiResponse(text).then(aiResponse => {
       removeTypingIndicator();
       appendChatMessage("ai", aiResponse, true);
