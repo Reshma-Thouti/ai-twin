@@ -1,5 +1,3 @@
-const { kv } = require('@vercel/kv');
-
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -17,37 +15,26 @@ module.exports = async function handler(req, res) {
   }
 
   const { type, query, metadata } = req.body;
+  const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
 
   try {
-    if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
-      console.warn("[T.E.S.A Analytics] Vercel KV credentials missing. Running offline mode.");
+    if (!webhookUrl) {
+      console.warn("[T.E.S.A Analytics] GOOGLE_SHEET_WEBHOOK_URL missing. Running offline mode.");
       res.setHeader('Access-Control-Allow-Origin', '*');
-      return res.status(200).json({ status: 'offline', message: 'Logged locally only due to missing KV credentials.' });
+      return res.status(200).json({ status: 'offline', message: 'Logged locally only due to missing webhook URL.' });
     }
 
-    const timestamp = new Date().toISOString();
-    const logEntry = {
-      type, // "query", "tab-swap", "download", "quiz-score"
-      query: query || "",
-      metadata: metadata || {},
-      timestamp
-    };
-
-    await kv.lpush('tesa_interaction_logs', JSON.stringify(logEntry));
-    await kv.ltrim('tesa_interaction_logs', 0, 999); // Keep last 1000 logs
-
-    if (type === 'download') {
-      await kv.incr('tesa_stat_downloads');
-    } else if (type === 'quiz-score') {
-      await kv.incr('tesa_stat_quizzes');
-    } else if (type === 'query') {
-      await kv.incr('tesa_stat_queries');
-    }
+    // Post to Google Apps Script Web App
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, query, metadata })
+    });
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(200).json({ status: 'success' });
   } catch (err) {
-    console.error("Analytics Logger Error:", err);
+    console.error("Google Sheets Analytics Logger Error:", err);
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(500).json({ error: err.message });
   }

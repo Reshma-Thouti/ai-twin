@@ -1,5 +1,3 @@
-const { kv } = require('@vercel/kv');
-
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -34,8 +32,11 @@ module.exports = async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden: Invalid Admin Session.' });
   }
 
+  const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+
   try {
-    if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+    if (!webhookUrl) {
+      // Mock stats and logs if sheet is not linked
       return res.status(200).json({
         status: 'mocked',
         stats: {
@@ -52,30 +53,19 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const logs = await kv.lrange('tesa_interaction_logs', 0, 100);
-    const downloads = (await kv.get('tesa_stat_downloads')) || 0;
-    const quizzes = (await kv.get('tesa_stat_quizzes')) || 0;
-    const queries = (await kv.get('tesa_stat_queries')) || 0;
+    const response = await fetch(webhookUrl);
+    if (!response.ok) {
+      throw new Error(`Google Sheet returned status ${response.status}`);
+    }
 
-    const parsedLogs = logs.map(log => {
-      try {
-        return typeof log === 'string' ? JSON.parse(log) : log;
-      } catch (e) {
-        return log;
-      }
-    });
-
+    const data = await response.json();
     return res.status(200).json({
       status: 'live',
-      stats: {
-        downloads: parseInt(downloads, 10),
-        quizzes: parseInt(quizzes, 10),
-        queries: parseInt(queries, 10)
-      },
-      logs: parsedLogs
+      stats: data.stats,
+      logs: data.logs
     });
   } catch (err) {
-    console.error("Analytics Retrieval Error:", err);
+    console.error("Google Sheets Analytics Retrieval Error:", err);
     return res.status(500).json({ error: err.message });
   }
 };
