@@ -332,39 +332,6 @@
         </div>
       </div>
 
-      <!-- 11. ADMIN VIEW -->
-      <div class="hud-view-content" id="view-admin">
-        <h2 class="view-title">T.E.S.A COGNITIVE CORE ANALYTICS</h2>
-        <div class="hud-scrollable-content">
-          <div class="admin-stats-grid">
-            <div class="admin-stat-card">
-              <span class="admin-stat-lbl">TOTAL QUERIES</span>
-              <span class="admin-stat-val" id="admin-stat-queries">0</span>
-            </div>
-            <div class="admin-stat-card">
-              <span class="admin-stat-lbl">RESUME DOWNLOADS</span>
-              <span class="admin-stat-val" id="admin-stat-downloads">0</span>
-            </div>
-            <div class="admin-stat-card">
-              <span class="admin-stat-lbl">QUIZZES SOLVED</span>
-              <span class="admin-stat-val" id="admin-stat-quizzes">0</span>
-            </div>
-          </div>
-          
-          <h3 class="admin-section-title">RECRUITER INTERACTION STREAM</h3>
-          <div class="admin-logs-table">
-            <div class="admin-logs-header">
-              <div>TIMESTAMP</div>
-              <div>EVENT TYPE</div>
-              <div>DETAILS</div>
-            </div>
-            <div class="admin-logs-list" id="admin-logs-list">
-              <!-- Logs populated dynamically -->
-            </div>
-          </div>
-        </div>
-      </div>
-
     </section>
 
    
@@ -477,26 +444,7 @@
 
   </main>
 
-  <!-- Passcode Overlay Modal -->
-  <div class="modal-overlay" id="admin-passcode-modal">
-    <div class="modal-card admin-passcode-card">
-      <div class="card-corner-top-left"></div>
-      <div class="card-corner-bottom-right"></div>
-      <h3 class="modal-title">ACCESSING SECURE ANALYTICS CORE</h3>
-      <p class="modal-desc">
-        Enter authorization credentials to connect with T.E.S.A Cognitive Core analytics logs.
-      </p>
-      
-      <div class="api-key-input-container">
-        <input type="password" id="admin-passcode-input" placeholder="ENTER CORE PASSCODE..." autocomplete="off">
-        <button class="api-save-btn" id="btn-submit-passcode">AUTHORIZE ACCESS</button>
-      </div>
-      
-      <div class="api-info-text">
-        <button class="api-close-btn" id="btn-close-passcode-modal">CANCEL CONNECTION</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- JavaScript Modules -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

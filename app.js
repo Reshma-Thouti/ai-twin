@@ -491,7 +491,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         row.querySelector(".btn-file-dl").addEventListener("click", () => {
           playHudSound("incoming");
-          logInteraction("download", file.name);
           
           if (file.name === "Stark_Certified_Recruiter.pdf") {
             const name = prompt("Enter your name for the Stark Certification:", "Creative Recruiter");
@@ -546,7 +545,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const tabName = item.getAttribute("data-tab");
       
       playHudSound("click");
-      logInteraction("tab-swap", tabName);
       
       // Update Active Navigation Item
       navItems.forEach(n => n.classList.remove("active"));
@@ -1110,36 +1108,15 @@ ${JSON.stringify(data, null, 2)}
     }
   }
 
-  // --- TELEMETRY LOGGER ---
-  async function logInteraction(type, query, metadata = {}) {
-    try {
-      fetch("/api/log-interaction", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, query, metadata })
-      }).catch(err => console.warn("KV Logging failed offline:", err));
-      
-      const localLogs = JSON.parse(localStorage.getItem("tesa_local_logs") || "[]");
-      localLogs.unshift({
-        type,
-        query: query || "",
-        metadata,
-        timestamp: new Date().toISOString()
-      });
-      localStorage.setItem("tesa_local_logs", JSON.stringify(localLogs.slice(0, 500)));
-    } catch(e) {
-      console.warn("Local logging error:", e);
-    }
-  }
-
   // --- STARK TECH QUIZ STATE MACHINE ---
   let quizActive = false;
   let quizStep = 0;
   let quizScore = 0;
+  let currentQuizQuestions = [];
   
-  const quizQuestions = [
+  const quizPool = [
     {
-      question: "<strong>Question 1 of 3:</strong> What is the average time complexity of searching in a Balanced Binary Search Tree (like an AVL or Red-Black tree)?",
+      question: "<strong>Question:</strong> What is the average time complexity of searching in a Balanced Binary Search Tree (like an AVL or Red-Black tree)?",
       choices: {
         A: "O(1)",
         B: "O(log N)",
@@ -1149,7 +1126,7 @@ ${JSON.stringify(data, null, 2)}
       correct: "B"
     },
     {
-      question: "<strong>Question 2 of 3:</strong> In Python, which standard library package bypasses the Global Interpreter Lock (GIL) by spawning sub-processes?",
+      question: "<strong>Question:</strong> In Python, which standard library package bypasses the Global Interpreter Lock (GIL) by spawning sub-processes?",
       choices: {
         A: "threading",
         B: "asyncio",
@@ -1159,12 +1136,82 @@ ${JSON.stringify(data, null, 2)}
       correct: "C"
     },
     {
-      question: "<strong>Question 3 of 3:</strong> Which Chrome Extension MV3 API provides declarative routing controls to redirect requests without service worker overhead?",
+      question: "<strong>Question:</strong> Which Chrome Extension MV3 API provides declarative routing controls to redirect requests without service worker overhead?",
       choices: {
         A: "chrome.tabs",
         B: "chrome.declarativeNetRequest",
         C: "chrome.webRequest",
         D: "chrome.runtime"
+      },
+      correct: "B"
+    },
+    {
+      question: "<strong>Question:</strong> What is the time complexity of building a heap from an unsorted array of N elements?",
+      choices: {
+        A: "O(1)",
+        B: "O(log N)",
+        C: "O(N)",
+        D: "O(N log N)"
+      },
+      correct: "C"
+    },
+    {
+      question: "<strong>Question:</strong> In JavaScript, which event loop phase executes `process.nextTick` callbacks in Node.js?",
+      choices: {
+        A: "Timers phase",
+        B: "Poll phase",
+        C: "Immediately after the current stack, before the event loop continues",
+        D: "Check phase"
+      },
+      correct: "C"
+    },
+    {
+      question: "<strong>Question:</strong> In Python, what is the key difference between a list and a tuple?",
+      choices: {
+        A: "Lists are immutable, tuples are mutable",
+        B: "Lists are mutable, tuples are immutable",
+        C: "Lists cannot hold duplicate values",
+        D: "Tuples are faster for item insertions"
+      },
+      correct: "B"
+    },
+    {
+      question: "<strong>Question:</strong> Which HTTP status code represents 'Payload Too Large'?",
+      choices: {
+        A: "403 Forbidden",
+        B: "413 Payload Too Large",
+        C: "429 Too Many Requests",
+        D: "418 I'm a teapot"
+      },
+      correct: "B"
+    },
+    {
+      question: "<strong>Question:</strong> In relational database design, which normal form ensures there are no transitive dependencies?",
+      choices: {
+        A: "1NF",
+        B: "2NF",
+        C: "3NF",
+        D: "BCNF"
+      },
+      correct: "C"
+    },
+    {
+      question: "<strong>Question:</strong> In browser extensions, which script runs in the context of the web page but has isolated JS execution states?",
+      choices: {
+        A: "Background Service Worker",
+        B: "Popup Script",
+        C: "Content Script",
+        D: "Options Script"
+      },
+      correct: "C"
+    },
+    {
+      question: "<strong>Question:</strong> What is the time complexity to find the shortest path in a weighted graph using Dijkstra's algorithm with a binary heap?",
+      choices: {
+        A: "O(V^2)",
+        B: "O(E log V)",
+        C: "O(V + E)",
+        D: "O(V log V)"
       },
       correct: "B"
     }
@@ -1176,7 +1223,11 @@ ${JSON.stringify(data, null, 2)}
     quizStep = 0;
     quizScore = 0;
     
-    appendChatMessage("ai", "⚡ <strong>DIAGNOSTIC TRIVIA INITIATED</strong> ⚡<br>T.E.S.A systems require verification. Answer 3 technical questions correctly to unlock the <strong>Stark Certified Recruiter Certificate</strong>.<br><br>Starting now...", true);
+    // Select 3 random questions from the pool of 10
+    const shuffled = [...quizPool].sort(() => 0.5 - Math.random());
+    currentQuizQuestions = shuffled.slice(0, 3);
+    
+    appendChatMessage("ai", "⚡ <strong>DIAGNOSTIC TRIVIA INITIATED</strong> ⚡<br>T.E.S.A systems require verification. Answer 3 randomized technical questions correctly to unlock the <strong>Stark Certified Recruiter Certificate</strong>.<br><br>Starting now...", true);
     
     setTimeout(() => {
       askQuizQuestion();
@@ -1184,8 +1235,8 @@ ${JSON.stringify(data, null, 2)}
   };
 
   function askQuizQuestion() {
-    const qInfo = quizQuestions[quizStep];
-    let msgHtml = `${qInfo.question}<br><br>`;
+    const qInfo = currentQuizQuestions[quizStep];
+    let msgHtml = `<strong>Question ${quizStep + 1} of 3:</strong> ${qInfo.question.replace("<strong>Question:</strong> ", "")}<br><br>`;
     
     appendChatMessage("ai", msgHtml, true);
 
@@ -1202,9 +1253,10 @@ ${JSON.stringify(data, null, 2)}
       choicesContainer.appendChild(btn);
     });
     
-    const chatHistory = document.getElementById("chat-history-container");
-    if (chatHistory) {
-      const lastMsgBubble = chatHistory.lastElementChild.querySelector(".msg-bubble");
+    // Get the correct element ID: "chat-history"
+    const chatHistoryEl = document.getElementById("chat-history");
+    if (chatHistoryEl) {
+      const lastMsgBubble = chatHistoryEl.lastElementChild.querySelector(".msg-bubble");
       if (lastMsgBubble) {
         lastMsgBubble.appendChild(choicesContainer);
       }
@@ -1212,7 +1264,7 @@ ${JSON.stringify(data, null, 2)}
   }
 
   function handleQuizAnswer(answer) {
-    const qInfo = quizQuestions[quizStep];
+    const qInfo = currentQuizQuestions[quizStep];
     const normalizedAns = answer.toUpperCase().trim();
     
     if (normalizedAns === qInfo.correct) {
@@ -1227,7 +1279,7 @@ ${JSON.stringify(data, null, 2)}
     quizStep++;
     
     setTimeout(() => {
-      if (quizStep < quizQuestions.length) {
+      if (quizStep < currentQuizQuestions.length) {
         askQuizQuestion();
       } else {
         finishQuiz();
@@ -1237,7 +1289,6 @@ ${JSON.stringify(data, null, 2)}
 
   function finishQuiz() {
     quizActive = false;
-    logInteraction("quiz-score", `${quizScore}/3`);
     
     if (quizScore === 3) {
       playHudSound("incoming");
@@ -1317,102 +1368,6 @@ ${JSON.stringify(data, null, 2)}
     appendChatMessage("ai", `🔥 <strong>LIVE CODE ROASTER INITIALIZED</strong> 🔥<br><br>Submit a block of code by typing <strong>/roast [your code]</strong> in the chat input below (e.g. <code>/roast def hello(): print('spaghetti')</code>), and T.E.S.A will run a sarcastic code-review diagnostic!`, true);
   };
 
-  // --- ADMIN PORTAL PANEL CONTROLS ---
-  const secretTrigger = document.querySelector(".status-avatar-container");
-  if (secretTrigger) {
-    secretTrigger.addEventListener("dblclick", () => {
-      playHudSound("click");
-      document.getElementById("admin-passcode-modal").classList.add("active");
-    });
-  }
-
-  const passcodeModal = document.getElementById("admin-passcode-modal");
-  const passcodeInput = document.getElementById("admin-passcode-input");
-  const submitPasscodeBtn = document.getElementById("btn-submit-passcode");
-  const closePasscodeBtn = document.getElementById("btn-close-passcode-modal");
-
-  if (closePasscodeBtn) {
-    closePasscodeBtn.addEventListener("click", () => {
-      playHudSound("click");
-      passcodeModal.classList.remove("active");
-    });
-  }
-
-  if (submitPasscodeBtn) {
-    submitPasscodeBtn.addEventListener("click", () => {
-      const password = passcodeInput.value.trim();
-      if (!password) return;
-
-      fetch("/api/admin-auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password })
-      })
-      .then(res => {
-        if (!res.ok) throw new Error("Invalid passcode");
-        return res.json();
-      })
-      .then(data => {
-        playHudSound("incoming");
-        passcodeModal.classList.remove("active");
-        passcodeInput.value = "";
-        localStorage.setItem("tesa_admin_token", data.token);
-        switchToAdminDashboard(data.token);
-      })
-      .catch(err => {
-        playHudSound("error");
-        alert("Core passcode access denied.");
-      });
-    });
-  }
-
-  function switchToAdminDashboard(token) {
-    navItems.forEach(n => n.classList.remove("active"));
-    views.forEach(v => v.classList.remove("active"));
-    const adminView = document.getElementById("view-admin");
-    if (adminView) adminView.classList.add("active");
-    loadAnalyticsDashboard(token);
-  }
-
-  function loadAnalyticsDashboard(token) {
-    fetch("/api/get-analytics", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token })
-    })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("admin-stat-queries").textContent = data.stats.queries;
-      document.getElementById("admin-stat-downloads").textContent = data.stats.downloads;
-      document.getElementById("admin-stat-quizzes").textContent = data.stats.quizzes;
-      
-      const logsList = document.getElementById("admin-logs-list");
-      if (logsList) {
-        logsList.innerHTML = "";
-        let logs = data.logs || [];
-        if (data.status === 'mocked') {
-          const localLogs = JSON.parse(localStorage.getItem("tesa_local_logs") || "[]");
-          logs = [...localLogs, ...logs];
-        }
-        
-        logs.forEach(log => {
-          const row = document.createElement("div");
-          row.className = "admin-log-row";
-          const time = new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-          const date = new Date(log.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' });
-          
-          row.innerHTML = `
-            <span class="admin-log-time">${date} ${time}</span>
-            <span class="admin-log-type ${log.type}">${log.type}</span>
-            <span class="admin-log-details" title="${log.query}">${log.query}</span>
-          `;
-          logsList.appendChild(row);
-        });
-      }
-    })
-    .catch(err => console.error("Dashboard load failed:", err));
-  }
-
   // --- SUBMIT USER QUERY INTERCEPTOR ---
   function submitUserQuery(text) {
     if (!text.trim()) return;
@@ -1427,17 +1382,6 @@ ${JSON.stringify(data, null, 2)}
       handleQuizAnswer(text);
       return;
     }
-
-    const cleanText = text.toLowerCase().trim();
-
-    // 2. Intercept admin view access shortcut
-    if (cleanText === "/admin") {
-      document.getElementById("admin-passcode-modal").classList.add("active");
-      return;
-    }
-
-    // 3. Log query telemetry
-    logInteraction("query", text);
 
     appendTypingIndicator();
     getGeminiResponse(text).then(aiResponse => {
